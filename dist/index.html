@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#05070b">
+  <meta name="description" content="The cinematic cybersecurity, research, conference and travel portfolio of ZR. Saimun — Md Zillur Rahman Saimon.">
+  <title>ZR. Saimun — Cybersecurity, Research & Beyond Borders</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2305070b'/%3E%3Cpath d='M13 18h25L18 46h33' fill='none' stroke='%23d8b36a' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M43 18v28' stroke='%2368d7ff' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./immersive.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to the story</a>
+
+  <div class="boot" id="boot" aria-live="polite">
+    <div class="boot__coordinates" aria-hidden="true">51.5074° N&nbsp;&nbsp; 0.1278° W</div>
+    <div class="boot__mark" aria-hidden="true"><span>Z</span><i></i><span>R</span></div>
+    <p class="boot__status" id="bootStatus">Tracing a life across borders</p>
+    <div class="boot__rail"><span id="bootBar"></span></div>
+    <div class="boot__meta"><span>IDENTITY / VERIFIED</span><strong id="bootCount">00</strong></div>
+    <button class="boot__skip" id="skipBoot" type="button">Enter now</button>
+  </div>
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" id="cursor" aria-hidden="true"><span></span></div>
+  <div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div>
+
+  <header class="site-header" id="siteHeader">
+    <a class="monogram magnetic" href="#home" aria-label="ZR. Saimun, home"><span>ZR</span><i></i></a>
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a href="#home">Drive</a>
+      <a href="#expedition">Expedition</a>
+      <a href="#identity">Identity</a>
+      <a href="#journey">Journey</a>
+      <a href="#conferences">Conferences</a>
+      <a href="#research">Research</a>
+      <a href="#memories">Memories</a>
+      <a href="#atlas">Atlas</a>
+    </nav>
+    <div class="header-actions">
+      <button class="sound-toggle magnetic" id="soundToggle" type="button" aria-pressed="false" aria-label="Turn ambient sound on">
+        <span class="sound-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="sound-label">Sound off</span>
+      </button>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span class="sr-only">Open menu</span></button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <p>Navigate the story</p>
+    <a href="#home"><span>00</span>Drive my world</a>
+    <a href="#expedition"><span>↘</span>Expedition</a>
+    <a href="#identity"><span>01</span>Identity</a>
+    <a href="#journey"><span>02</span>Journey</a>
+    <a href="#conferences"><span>03</span>Conferences</a>
+    <a href="#research"><span>04</span>Research</a>
+    <a href="#memories"><span>05</span>Memories</a>
+    <a href="#contact"><span>06</span>Contact</a>
+  </div>
+
+  <main id="main">
+    <section class="play-world" id="home" aria-labelledby="worldHeading">
+      <canvas id="driveCanvas" aria-label="A 3D world connecting Saimun’s work, research, conferences and memories"></canvas>
+      <div class="world-vignette" aria-hidden="true"></div>
+      <div class="world-heading">
+        <p class="eyebrow">Cybersecurity engineer / researcher / explorer</p>
+        <h1 id="worldHeading">ZR. SAIMUN<span>A world worth exploring.</span></h1>
+      </div>
+      <div class="world-mode" role="group" aria-label="World mode">
+        <button id="driveMode" aria-pressed="false">Drive yourself</button>
+        <button id="tourMode" aria-pressed="true">Take a tour</button>
+      </div>
+      <div class="world-location" aria-live="polite"><span id="driveChapter">00 / THE CROSSROADS</span><strong id="drivePlace">Every route has a story.</strong><button id="enterChapter" hidden>Enter this chapter ↗</button></div>
+      <div class="drive-status"><span id="driveSpeed">AUTO</span><small id="driveHint">A guided orbit through my world</small></div>
+      <div class="world-tools"><button id="worldReset" aria-label="Return car to the start">Reset</button><button id="motionToggle" aria-pressed="false">Pause motion</button></div>
+      <div class="world-map" aria-label="Jump to a chapter">
+        <span>CHAPTERS</span><button data-station="0">01 Identity</button><button data-station="1">02 Research</button><button data-station="2">03 Conferences</button><button data-station="3">04 Memories</button><button data-station="4">05 Connect</button>
+      </div>
+      <div class="joystick" id="joystick" aria-label="Touch and drag to steer the car"><span id="joystickKnob"></span></div>
+      <button class="drive-jump" id="driveJump" aria-label="Jump the car">Jump</button>
+      <a class="world-scroll" href="#expedition">Scroll into the expedition <span>↓</span></a>
+      <p class="webgl-fallback" id="webglFallback" hidden>The 3D world is unavailable on this device. Explore every chapter using the links or scroll into the story.</p>
+    </section>
+
+    <section class="expedition" id="expedition" aria-labelledby="expeditionTitle">
+      <div class="expedition-stage" id="expeditionStage">
+        <canvas id="expeditionCanvas" aria-hidden="true"></canvas>
+        <div class="expedition-photo" id="expeditionPhoto"><img id="expeditionImage" src="./assets/photos/IMG_4317.webp" alt="ZR. Saimun by Tower Bridge in London"></div>
+        <div class="expedition-shade" aria-hidden="true"></div>
+        <div class="expedition-titles">
+          <p id="expeditionIndex">01 / LONDON</p>
+          <h2 id="expeditionTitle">One life.<br><em>Many horizons.</em></h2>
+          <p id="expeditionCopy">Follow the route from a global perspective into the moments that made it personal.</p>
+        </div>
+        <p class="expedition-coordinates" id="expeditionCoordinates">51.5074° N / 0.1278° W</p>
+        <div class="expedition-navigation" id="expeditionNavigation" aria-label="Choose an expedition chapter"></div>
+        <div class="expedition-progress"><span id="expeditionProgress"></span></div>
+        <p class="expedition-guide">Your scroll moves the camera <span>↓</span></p>
+      </div>
+    </section>
+
+    <section class="hero portrait-chapter" id="portrait" aria-labelledby="heroTitle">
+      <img class="hero__world" src="./assets/hero-world.webp" alt="" fetchpriority="high">
+      <canvas class="hero__canvas" id="heroCanvas" aria-hidden="true"></canvas>
+      <div class="hero__veil" aria-hidden="true"></div>
+
+      <div class="hero__copy">
+        <p class="kicker reveal-line"><span>London / Connected to the world</span></p>
+        <h2 id="heroTitle" aria-label="ZR. Saimun">
+          <span class="hero__name hero__name--top">ZR.</span>
+          <span class="hero__name hero__name--bottom">SAIMUN</span>
+        </h2>
+        <p class="hero__formal reveal-line"><span>MD ZILLUR RAHMAN SAIMON</span></p>
+        <p class="hero__statement">I protect systems.<br>I study intelligence.<br><em>I cross borders to exchange ideas.</em></p>
+        <div class="hero__actions">
+          <a class="circle-link magnetic" href="#identity"><span>Enter<br>the story</span><b aria-hidden="true">↓</b></a>
+          <button class="text-button magnetic" id="launchPilot" type="button"><span>Launch pilot mode</span><i aria-hidden="true">✦</i></button>
+        </div>
+      </div>
+
+      <div class="hero__portrait parallax-card" data-depth="0.035">
+        <div class="portrait-frame">
+          <img src="./assets/photos/IMG_8446.webp" alt="ZR. Saimun standing by Dubai Marina" fetchpriority="high">
+          <div class="portrait-scan" aria-hidden="true"></div>
+          <p><span>SUBJECT 001</span><strong>CYBERSECURITY / RESEARCH</strong></p>
+        </div>
+        <div class="orbit-label orbit-label--a" aria-hidden="true">51°30′N</div>
+        <div class="orbit-label orbit-label--b" aria-hidden="true">GLOBAL SIGNAL</div>
+      </div>
+
+      <div class="hero__side-note" aria-hidden="true">
+        <span>Scroll to travel</span><i></i><b>001—006</b>
+      </div>
+    </section>
+
+    <section class="manifesto" aria-label="Portfolio statement">
+      <p class="manifesto__index">01 / THE SIGNAL</p>
+      <div class="manifesto__text" data-scrub-text>
+        <span>A career can be listed.</span>
+        <span>A life should be explored.</span>
+      </div>
+      <p class="manifesto__note">Cybersecurity, applied research, conferences and memories — one connected journey.</p>
+    </section>
+
+    <section class="identity section-shell" id="identity" aria-labelledby="identityTitle">
+      <div class="section-label"><span>01</span><p>Identity</p><i></i></div>
+      <div class="identity__layout">
+        <div class="identity__portrait image-reveal tilt-card">
+          <img src="./assets/photos/IMG_7367.webp" alt="ZR. Saimun in a professional office setting" loading="lazy">
+          <div class="identity__portrait-label"><span>London, UK</span><span>Current chapter</span></div>
+        </div>
+        <div class="identity__copy">
+          <p class="eyebrow">Who I am</p>
+          <h2 id="identityTitle">A security mind<br>with a traveller’s eye.</h2>
+          <p class="lede">ZR. Saimun is the public identity of <strong>Md Zillur Rahman Saimon</strong> — a London-based cybersecurity engineer and researcher whose work moves between secure systems, artificial intelligence and real-world human connection.</p>
+          <div class="identity__keywords" aria-label="Personal qualities">
+            <span>CURIOUS</span><span>GLOBAL</span><span>CONNECTED</span><span>DRIVEN</span>
+          </div>
+          <div class="identity__facts">
+            <article><b>Current</b><h3>Cybersecurity Engineer</h3><p>NCC Group · London</p></article>
+            <article><b>Research</b><h3>Cybersecurity & Applied AI</h3><p>Published work across IoT, RAG and medical imaging.</p></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="current-chapter" aria-labelledby="currentTitle">
+      <canvas id="networkCanvas" aria-hidden="true"></canvas>
+      <div class="current-chapter__noise" aria-hidden="true"></div>
+      <div class="current-chapter__content section-shell">
+        <p class="eyebrow">Current chapter / London</p>
+        <h2 id="currentTitle">Trust is built<br><span>before</span> the breach.</h2>
+        <p>At NCC Group, the journey enters a sharper phase: cybersecurity as disciplined thinking, responsible defence and continuous learning.</p>
+        <div class="terminal" aria-label="Cybersecurity focus areas">
+          <div class="terminal__bar"><i></i><i></i><i></i><span>ZR / SECURE SESSION</span></div>
+          <div class="terminal__body" id="terminalBody">
+            <p><span>01</span> Risk-aware engineering</p>
+            <p><span>02</span> Threat-led thinking</p>
+            <p><span>03</span> Secure systems</p>
+            <p><span>04</span> Research into practice</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="experience section-shell" aria-labelledby="experienceTitle">
+      <div class="section-label"><span>02</span><p>Experience & education</p><i></i></div>
+      <div class="experience__heading">
+        <h2 id="experienceTitle">Not a résumé.<br>A sequence of decisions.</h2>
+        <p>Technical practice, leadership and formal study — shown only where the record is established.</p>
+      </div>
+      <div class="experience__stack">
+        <article class="experience-card tilt-card">
+          <span class="experience-card__number">01</span>
+          <p class="experience-card__time">CURRENT</p>
+          <div><h3>Cybersecurity Engineer</h3><p>NCC Group · London, United Kingdom</p></div>
+          <b aria-hidden="true">↗</b>
+        </article>
+        <article class="experience-card tilt-card">
+          <span class="experience-card__number">02</span>
+          <p class="experience-card__time">DEC 2022—</p>
+          <div><h3>CTO & Head of Cybersecurity Operations</h3><p>Eson Soft IT · Remote from the UK</p></div>
+          <b aria-hidden="true">↗</b>
+        </article>
+        <article class="experience-card tilt-card">
+          <span class="experience-card__number">03</span>
+          <p class="experience-card__time">2022—2024</p>
+          <div><h3>MSc Cyber Security & Forensic Information Technology</h3><p>University of Portsmouth</p></div>
+          <b aria-hidden="true">↗</b>
+        </article>
+        <article class="experience-card tilt-card">
+          <span class="experience-card__number">04</span>
+          <p class="experience-card__time">2017—2021</p>
+          <div><h3>BSc Computer Science & Engineering</h3><p>American International University-Bangladesh</p></div>
+          <b aria-hidden="true">↗</b>
+        </article>
+      </div>
+    </section>
+
+    <section class="journey" id="journey" aria-labelledby="journeyTitle">
+      <div class="journey__intro section-shell">
+        <div class="section-label section-label--light"><span>03</span><p>My journey</p><i></i></div>
+        <p class="eyebrow">A moving timeline</p>
+        <h2 id="journeyTitle">The route changed.<br>The curiosity did not.</h2>
+      </div>
+      <div class="journey__scroll" id="journeyScroll">
+        <div class="journey__sticky">
+          <svg class="journey__route" viewBox="0 0 1500 260" role="img" aria-label="A route connecting chapters from Bangladesh to London and across the world">
+            <path id="journeyRouteBase" d="M50 185 C220 30 350 235 520 110 S820 35 970 150 S1240 245 1450 75"></path>
+            <path id="journeyRouteActive" d="M50 185 C220 30 350 235 520 110 S820 35 970 150 S1240 245 1450 75"></path>
+          </svg>
+          <div class="journey__plane" id="journeyPlane" aria-hidden="true"><span>✈</span></div>
+          <div class="journey__track" id="journeyTrack">
+            <article class="journey-card" data-year="2022">
+              <div class="journey-card__image"><img src="./assets/photos/IMG_0785.webp" alt="ZR. Saimun seated outdoors" loading="lazy"></div>
+              <p>CHAPTER 01</p><h3>From Bangladesh<br>to Portsmouth</h3><span>Computer science became cybersecurity; a home country became the first point on a much wider map.</span>
+            </article>
+            <article class="journey-card" data-year="2023">
+              <div class="journey-card__image"><img src="./assets/photos/IMG_4317.webp" alt="ZR. Saimun beside Tower Bridge in London" loading="lazy"></div>
+              <p>CHAPTER 02</p><h3>London became<br>the operating base</h3><span>Professional growth in the UK, with Madrid, Paris, Stockholm and Oslo entering the personal route.</span>
+            </article>
+            <article class="journey-card" data-year="2024">
+              <div class="journey-card__image"><img src="./assets/photos/8B256216-6194-4BDD-8748-49EA5D58ECEF.webp" alt="ZR. Saimun walking through Santorini" loading="lazy"></div>
+              <p>CHAPTER 03</p><h3>Europe became<br>a learning network</h3><span>Technology, research and startup events connected Zürich, Frankfurt, Hamburg, Basel, Munich and Anacapri.</span>
+            </article>
+            <article class="journey-card" data-year="2025">
+              <div class="journey-card__image"><img src="./assets/photos/IMG_8253.webp" alt="ZR. Saimun outside Sydney Opera House" loading="lazy"></div>
+              <p>CHAPTER 04</p><h3>Sydney, Beijing<br>and the north</h3><span>Conference rooms, long-haul routes and a winter memory in Tromsø expanded the story beyond Europe.</span>
+            </article>
+            <article class="journey-card" data-year="NOW">
+              <div class="journey-card__image"><img src="./assets/photos/IMG_8625.webp" alt="ZR. Saimun overlooking the Dubai skyline" loading="lazy"></div>
+              <p>CHAPTER 05</p><h3>The next chapter<br>is being written</h3><span>Cybersecurity at NCC Group, active research and a global perspective — converging in London.</span>
+            </article>
+          </div>
+          <div class="journey__year" id="journeyYear" aria-live="polite">2022</div>
+          <div class="journey__hint">Scroll to move the route <span>→</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="world section-shell" aria-labelledby="worldTitle">
+      <div class="section-label"><span>04</span><p>Beyond borders</p><i></i></div>
+      <div class="world__header">
+        <div><p class="eyebrow">My world, one connection at a time</p><h2 id="worldTitle">Drag the globe.<br>Follow the signal.</h2></div>
+        <p>These destinations come from Saimun’s supplied travel archive, event tickets and photographs. Select a point to reveal its place in the story.</p>
+      </div>
+      <div class="world__stage">
+        <div class="globe-wrap" id="globeWrap">
+          <canvas id="globeCanvas" width="900" height="900" aria-label="Interactive rotating globe showing selected destinations"></canvas>
+          <div class="globe-ring globe-ring--one" aria-hidden="true"></div>
+          <div class="globe-ring globe-ring--two" aria-hidden="true"></div>
+          <button class="globe-reset magnetic" id="globeReset" type="button">Auto orbit</button>
+        </div>
+        <div class="world__panel">
+          <p class="world__counter"><span id="worldIndex">01</span> / <span id="worldTotal">00</span></p>
+          <h3 id="worldCity">London</h3>
+          <p id="worldCountry">United Kingdom</p>
+          <p class="world__story" id="worldStory">The current base — where professional practice, research and global routes meet.</p>
+          <div class="world__destinations" id="destinationList" aria-label="Choose a destination"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="conferences" id="conferences" aria-labelledby="conferenceTitle">
+      <div class="conferences__intro section-shell">
+        <div class="section-label section-label--light"><span>05</span><p>Conferences & events</p><i></i></div>
+        <p class="eyebrow">Beyond borders</p>
+        <h2 id="conferenceTitle">The ticket was never<br>the whole story.</h2>
+        <p>Each stop meant listening, exchanging ideas, meeting people and carrying a new perspective into the next room.</p>
+      </div>
+      <div class="conference-deck" id="conferenceDeck">
+        <article class="conference-card" data-accent="cyan">
+          <div class="conference-card__top"><span>01</span><p>ZÜRICH · 25 SEP 2024</p></div>
+          <h3>Zurich Tech +<br>Startups Social</h3>
+          <p>A professional connection point in Zürich’s technology and startup community.</p>
+          <button type="button" class="ticket-open" data-ticket="./assets/events/IMG_4596.webp" data-alt="Event ticket archive showing Zürich events">View archive</button>
+        </article>
+        <article class="conference-card" data-accent="gold">
+          <div class="conference-card__top"><span>02</span><p>FRANKFURT · 08 OCT 2024</p></div>
+          <h3>Quantum × AI</h3>
+          <p>A TechQuartier event exploring the intersection of two fast-moving fields.</p>
+          <button type="button" class="ticket-open" data-ticket="./assets/events/IMG_4597.webp" data-alt="Event ticket archive showing Quantum x AI in Frankfurt">View archive</button>
+        </article>
+        <article class="conference-card" data-accent="white">
+          <div class="conference-card__top"><span>03</span><p>ANACAPRI · 03 OCT 2024</p></div>
+          <h3>Research & Innovation<br>Applied to Materials</h3>
+          <p>A research-led stop at Centro Congressi Paradiso in Anacapri.</p>
+          <button type="button" class="ticket-open" data-ticket="./assets/events/IMG_4597.webp" data-alt="Event ticket archive showing the Anacapri research event">View archive</button>
+        </article>
+        <article class="conference-card" data-accent="cyan">
+          <div class="conference-card__top"><span>04</span><p>HAMBURG · 27 SEP 2024</p></div>
+          <h3>Test Management:<br>Industry & Research</h3>
+          <p>Best-practice exchange at Digital Hub Logistics Hamburg.</p>
+          <button type="button" class="ticket-open" data-ticket="./assets/events/IMG_4596.webp" data-alt="Event ticket archive showing the Hamburg event">View archive</button>
+        </article>
+        <article class="conference-card" data-accent="gold">
+          <div class="conference-card__top"><span>05</span><p>BASEL · 13 NOV 2024</p></div>
+          <h3>Build Your Own<br>Microscope</h3>
+          <p>A hands-on event at ETH Zürich’s Department of Biosystems Science and Engineering in Basel.</p>
+          <button type="button" class="ticket-open" data-ticket="./assets/events/IMG_4597.webp" data-alt="Event ticket archive showing the Basel event">View archive</button>
+        </article>
+        <article class="conference-card" data-accent="white">
+          <div class="conference-card__top"><span>06</span><p>MUNICH · 2024</p></div>
+          <h3>Munich Tech<br>Job Fair Autumn</h3>
+          <p>Technology careers, conversations and professional possibilities in Munich.</p>
+          <button type="button" class="ticket-open" data-ticket="./assets/events/IMG_4597.webp" data-alt="Event ticket archive showing the Munich Tech Job Fair">View archive</button>
+        </article>
+        <article class="conference-card" data-accent="cyan">
+          <div class="conference-card__top"><span>07</span><p>SYDNEY · 26 FEB 2025</p></div>
+          <h3>EMERGENCE<br>Sydney 2025</h3>
+          <p>An investment conference at Four Seasons Hotel Sydney.</p>
+          <button type="button" class="ticket-open" data-ticket="./assets/events/IMG_4598.webp" data-alt="Event ticket archive showing EMERGENCE Sydney 2025">View archive</button>
+        </article>
+        <article class="conference-card" data-accent="gold">
+          <div class="conference-card__top"><span>08</span><p>LONDON · 12 AUG 2024</p></div>
+          <h3>A Career in<br>Gametech</h3>
+          <p>A City Hall event focused on opportunity inside the games technology sector.</p>
+          <button type="button" class="ticket-open" data-ticket="./assets/events/IMG_4595.webp" data-alt="Event ticket archive showing the London Gametech event">View archive</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="research section-shell" id="research" aria-labelledby="researchTitle">
+      <div class="section-label"><span>06</span><p>Selected research</p><i></i></div>
+      <div class="research__heading">
+        <div><p class="eyebrow">Questions become systems</p><h2 id="researchTitle">Research is where<br>curiosity becomes evidence.</h2></div>
+        <p>Selected publications verified against the supplied CV, IEEE author record, DOI pages and the author’s research profile.</p>
+      </div>
+      <div class="research-orbit">
+        <div class="research-orbit__core" aria-hidden="true"><span>ZR</span><i></i></div>
+        <a class="paper paper--one tilt-card" href="https://ieeexplore.ieee.org/document/11465692" target="_blank" rel="noopener">
+          <span>2026 · IEEE</span><h3>Query-Aware Adaptive Chunking for RAG in Mental Health and Well-Being Policy Question Answering</h3><p>Retrieval-augmented generation / responsible AI</p><b>Open paper ↗</b>
+        </a>
+        <a class="paper paper--two tilt-card" href="https://doi.org/10.1109/ICICV68925.2026.11554723" target="_blank" rel="noopener">
+          <span>2026 · IEEE ICICV</span><h3>Comparative Analysis of Detection and Segmentation Architectures for Gastrointestinal Polyp Detection</h3><p>YOLO variants / deep segmentation</p><b>Open DOI ↗</b>
+        </a>
+        <a class="paper paper--three tilt-card" href="https://ieeexplore.ieee.org/document/11253614" target="_blank" rel="noopener">
+          <span>2025 · IEEE</span><h3>An Ensemble-based Diagnostic Framework for Automated Cervical Cancer Detection</h3><p>Hybrid CNN / medical imaging</p><b>Open paper ↗</b>
+        </a>
+        <a class="paper paper--four tilt-card" href="https://doi.org/10.1109/CONIT61985.2024.10626930" target="_blank" rel="noopener">
+          <span>2024 · IEEE</span><h3>Hybrid Deep Transfer Learning Framework for Humerus Fracture Detection and Classification</h3><p>Transfer learning / X-ray imaging</p><b>Open DOI ↗</b>
+        </a>
+        <a class="paper paper--five tilt-card" href="https://doi.org/10.56532/mjsat.v3i1.125" target="_blank" rel="noopener">
+          <span>2023 · MJSAT</span><h3>Integrated IoT Smart Home with Automated Fire and Smoke Security Alerts</h3><p>IoT / automation / security</p><b>Open DOI ↗</b>
+        </a>
+        <a class="paper paper--six tilt-card" href="https://scholar.google.com/citations?hl=en&user=jEayXjsAAAAJ" target="_blank" rel="noopener">
+          <span>2022 · EARLY WORK</span><h3>Improvement on Online Examination System</h3><p>Secure digital education systems</p><b>View profile ↗</b>
+        </a>
+      </div>
+      <div class="profile-links">
+        <a href="https://ieeexplore.ieee.org/author/839468180561680" target="_blank" rel="noopener">IEEE author profile <span>↗</span></a>
+        <a href="https://orcid.org/0000-0003-2049-2033" target="_blank" rel="noopener">ORCID <span>↗</span></a>
+        <a href="https://scholar.google.com/citations?hl=en&user=jEayXjsAAAAJ" target="_blank" rel="noopener">Google Scholar <span>↗</span></a>
+      </div>
+    </section>
+
+    <section class="memories" id="memories" aria-labelledby="memoriesTitle">
+      <div class="memories__heading section-shell">
+        <div class="section-label section-label--light"><span>07</span><p>Travel memories</p><i></i></div>
+        <p class="eyebrow">Places that became stories</p>
+        <h2 id="memoriesTitle">Not collected.<br><em>Remembered.</em></h2>
+        <p>Drag the film. Select a frame. Every photograph below comes from Saimun’s personal archive.</p>
+      </div>
+      <div class="film" id="film" tabindex="0" aria-label="Horizontal travel memory gallery. Drag or use arrow keys.">
+        <div class="film__track" id="filmTrack">
+          <button class="memory memory--tall" data-title="Santorini" data-caption="White paths, Aegean blue, a frame held for memory." data-full="./assets/photos/8B256216-6194-4BDD-8748-49EA5D58ECEF.webp"><img src="./assets/photos/8B256216-6194-4BDD-8748-49EA5D58ECEF.webp" alt="ZR. Saimun walking through Santorini" loading="lazy"><span>01 / SANTORINI</span></button>
+          <button class="memory memory--wide" data-title="London" data-caption="The city that became the centre of the route." data-full="./assets/photos/IMG_4317.webp"><img src="./assets/photos/IMG_4317.webp" alt="ZR. Saimun beside Tower Bridge" loading="lazy"><span>02 / LONDON</span></button>
+          <button class="memory memory--tall" data-title="Medina" data-caption="A quiet chapter of faith, reflection and presence." data-full="./assets/photos/IMG_1804.webp"><img src="./assets/photos/IMG_1804.webp" alt="ZR. Saimun at Al-Masjid an-Nabawi in Medina" loading="lazy"><span>03 / MEDINA</span></button>
+          <button class="memory memory--tall" data-title="Sydney" data-caption="A long-haul chapter where conferences met the harbour." data-full="./assets/photos/IMG_8253.webp"><img src="./assets/photos/IMG_8253.webp" alt="ZR. Saimun outside Sydney Opera House" loading="lazy"><span>04 / SYDNEY</span></button>
+          <button class="memory memory--wide" data-title="Dubai" data-caption="Professional energy against a city built vertically." data-full="./assets/photos/IMG_8446.webp"><img src="./assets/photos/IMG_8446.webp" alt="ZR. Saimun at Dubai Marina" loading="lazy"><span>05 / DUBAI</span></button>
+          <button class="memory memory--tall" data-title="Amsterdam" data-caption="Canals, cold air and a city observed on foot." data-full="./assets/photos/IMG_8806.webp"><img src="./assets/photos/IMG_8806.webp" alt="ZR. Saimun beside an Amsterdam canal" loading="lazy"><span>06 / AMSTERDAM</span></button>
+          <button class="memory memory--tall" data-title="Santorini" data-caption="Light, architecture and the calm between journeys." data-full="./assets/photos/IMG_6316.webp"><img src="./assets/photos/IMG_6316.webp" alt="ZR. Saimun in Santorini" loading="lazy"><span>07 / AEGEAN</span></button>
+          <button class="memory memory--tall" data-title="Personal archive" data-caption="A story can begin in an ordinary pause." data-full="./assets/photos/IMG_8056.webp"><img src="./assets/photos/IMG_8056.webp" alt="Portrait of ZR. Saimun" loading="lazy"><span>08 / PORTRAIT</span></button>
+          <button class="memory memory--tall" data-title="In motion" data-caption="Moving through the city, carrying the next idea." data-full="./assets/photos/IMG_7399.webp"><img src="./assets/photos/IMG_7399.webp" alt="ZR. Saimun walking through London" loading="lazy"><span>09 / IN MOTION</span></button>
+          <button class="memory memory--tall" data-title="Dubai" data-caption="A skyline, a pause, another memory secured." data-full="./assets/photos/IMG_8625.webp"><img src="./assets/photos/IMG_8625.webp" alt="ZR. Saimun overlooking Dubai" loading="lazy"><span>10 / DUBAI</span></button>
+        </div>
+      </div>
+      <div class="film__progress section-shell" aria-hidden="true"><span id="filmProgress"></span></div>
+    </section>
+
+    <section class="atlas" id="atlas" aria-labelledby="atlasTitle">
+      <div class="section-shell atlas__head">
+        <div class="section-label section-label--light"><span>08</span><p>World atlas</p><i></i></div>
+        <p class="eyebrow">20 chapters / one moving map</p>
+        <h2 id="atlasTitle">Every city leaves<br><em>a different signal.</em></h2>
+        <p>Explore the destinations in Saimun’s travel archive. Personal photographs are marked as memories; atmospheric plates are clearly artistic visualisations for places still being documented.</p>
+        <div class="atlas__filters" role="tablist" aria-label="Filter destinations"><button class="is-active" data-filter="all">All routes</button><button data-filter="europe">Europe</button><button data-filter="mediterranean">Mediterranean</button><button data-filter="north">Nordics</button><button data-filter="asia-pacific">Asia / Pacific</button></div>
+      </div>
+      <div class="atlas__grid section-shell"></div>
+    </section>
+
+    <section class="closing" id="contact" aria-labelledby="closingTitle">
+      <img src="./assets/photos/IMG_5448.webp" alt="" loading="lazy">
+      <div class="closing__veil" aria-hidden="true"></div>
+      <canvas id="closingCanvas" aria-hidden="true"></canvas>
+      <div class="closing__content">
+        <p class="eyebrow">The journey doesn’t end here</p>
+        <h2 id="closingTitle">Let’s create<br>the next chapter.</h2>
+        <a class="closing__email magnetic" href="mailto:zrsaimun@gmail.com">zrsaimun@gmail.com <span>↗</span></a>
+        <div class="closing__socials">
+          <a href="https://www.instagram.com/zrsaimun/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.facebook.com/zrsaimun" target="_blank" rel="noopener">Facebook</a>
+          <a href="https://ieeexplore.ieee.org/author/839468180561680" target="_blank" rel="noopener">IEEE</a>
+          <a href="https://orcid.org/0000-0003-2049-2033" target="_blank" rel="noopener">ORCID</a>
+        </div>
+      </div>
+      <div class="closing__signature" aria-hidden="true"><span>ZR. SAIMUN</span><p>KEEP EXPLORING</p></div>
+    </section>
+
+    <section class="sources section-shell" aria-labelledby="sourcesTitle">
+      <button class="sources__toggle" id="sourcesToggle" type="button" aria-expanded="false" aria-controls="sourcesBody">
+        <span id="sourcesTitle">Sources & accuracy notes</span><b>+</b>
+      </button>
+      <div class="sources__body" id="sourcesBody" hidden>
+        <p>Professional role, education, event attendance, travel history and photographs were supplied by ZR. Saimun. Publication details were cross-checked against the following records. No unverified award, statistic or conference was added.</p>
+        <ol>
+          <li><a href="https://ieeexplore.ieee.org/author/839468180561680" target="_blank" rel="noopener">IEEE Xplore — Md Zillur Rahman Saimon, author profile</a></li>
+          <li><a href="https://scholar.google.com/citations?hl=en&user=jEayXjsAAAAJ" target="_blank" rel="noopener">Google Scholar — ZR Saimun profile</a></li>
+          <li><a href="https://orcid.org/0000-0003-2049-2033" target="_blank" rel="noopener">ORCID — 0000-0003-2049-2033</a></li>
+          <li><a href="https://doi.org/10.56532/mjsat.v3i1.125" target="_blank" rel="noopener">Malaysian Journal of Science Advanced Technology — IoT smart-home paper, 2023</a></li>
+          <li><a href="https://doi.org/10.1109/CONIT61985.2024.10626930" target="_blank" rel="noopener">IEEE — Humerus fracture classification paper, 2024</a></li>
+          <li><a href="https://ieeexplore.ieee.org/document/11253614" target="_blank" rel="noopener">IEEE — Cervical cancer diagnostic framework, 2025</a></li>
+          <li><a href="https://ieeexplore.ieee.org/document/11465692" target="_blank" rel="noopener">IEEE — Query-aware adaptive chunking for RAG, 2026</a></li>
+          <li><a href="https://doi.org/10.1109/ICICV68925.2026.11554723" target="_blank" rel="noopener">IEEE — Gastrointestinal polyp detection and segmentation, 2026</a></li>
+        </ol>
+      </div>
+      <footer><span>© <span id="year"></span> ZR. Saimun</span><span>Designed as an interactive biography</span><a href="#home">Back to orbit ↑</a></footer>
+    </section>
+  </main>
+
+  <dialog class="lightbox" id="lightbox">
+    <button class="lightbox__close" type="button" aria-label="Close image">Close ×</button>
+    <div class="lightbox__image"><img id="lightboxImage" src="" alt=""></div>
+    <div class="lightbox__copy"><p>PERSONAL ARCHIVE</p><h2 id="lightboxTitle"></h2><span id="lightboxCaption"></span></div>
+  </dialog>
+
+  <dialog class="ticket-modal" id="ticketModal">
+    <button class="ticket-modal__close" type="button" aria-label="Close event archive">Close ×</button>
+    <div><img id="ticketImage" src="" alt=""></div>
+    <p>Personal event-ticket archive. The highlighted chapter appears in the supplied screenshot.</p>
+  </dialog>
+
+  <div class="pilot" id="pilot" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="pilotTitle">
+    <canvas id="pilotCanvas" aria-hidden="true"></canvas>
+    <div class="pilot__hud">
+      <div><p>PILOT MODE / ZR-01</p><h2 id="pilotTitle">Fly the route</h2></div>
+      <p class="pilot__score"><span id="pilotScore">0</span> / 5 signals found</p>
+      <button id="closePilot" type="button">Exit flight ×</button>
+    </div>
+    <div class="pilot__message" id="pilotMessage" aria-live="polite">Use WASD, arrow keys or the controls to navigate.</div>
+    <div class="pilot__controls" aria-label="Plane controls">
+      <button type="button" data-pilot="up" aria-label="Move up">↑</button>
+      <button type="button" data-pilot="left" aria-label="Move left">←</button>
+      <button type="button" data-pilot="down" aria-label="Move down">↓</button>
+      <button type="button" data-pilot="right" aria-label="Move right">→</button>
+    </div>
+  </div>
+
+  <script type="module" src="./script.js"></script>
+  <script type="module" src="./immersive.js"></script>
+  <script type="module" src="./atlas.js"></script>
+</body>
+</html>
