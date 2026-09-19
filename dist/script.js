@@ -1,3 +1,5 @@
+import { destinations, announceDestination } from './destinations.js';
+import { journeyAudio } from './soundscape.js';
 (() => {
   'use strict';
 
@@ -332,32 +334,6 @@
   updateJourney();
 
   /* Interactive world */
-  const destinations = [
-    { city: 'London', country: 'United Kingdom', lat: 51.507, lon: -0.128, story: 'The current base — where professional practice, research and global routes meet.' },
-    { city: 'Dhaka', country: 'Bangladesh', lat: 23.810, lon: 90.413, story: 'The origin point: education, identity and the first technical questions.' },
-    { city: 'Portsmouth', country: 'United Kingdom', lat: 50.819, lon: -1.088, story: 'Postgraduate study in cybersecurity and forensic information technology.' },
-    { city: 'Madrid', country: 'Spain', lat: 40.417, lon: -3.704, story: 'A European chapter shaped by movement, culture and observation.' },
-    { city: 'Paris', country: 'France', lat: 48.857, lon: 2.352, story: 'A recurring point on the route — ideas, architecture and memory.' },
-    { city: 'Stockholm', country: 'Sweden', lat: 59.329, lon: 18.069, story: 'A northern stop that widened the map in 2023.' },
-    { city: 'Oslo', country: 'Norway', lat: 59.914, lon: 10.752, story: 'A city revisited — proof that some places become continuing chapters.' },
-    { city: 'Barcelona', country: 'Spain', lat: 41.388, lon: 2.169, story: 'Design, public life and a Mediterranean change of pace.' },
-    { city: 'Santorini', country: 'Greece', lat: 36.393, lon: 25.461, story: 'A personal archive of white architecture, blue distance and stillness.' },
-    { city: 'Zürich', country: 'Switzerland', lat: 47.376, lon: 8.541, story: 'Technology workshops and a startup social connected a new professional community.' },
-    { city: 'Frankfurt', country: 'Germany', lat: 50.110, lon: 8.682, story: 'A Quantum × AI event at TechQuartier — two fields meeting in one room.' },
-    { city: 'Hamburg', country: 'Germany', lat: 53.551, lon: 9.994, story: 'Industry and research exchanged test-management practice at the Digital Hub.' },
-    { city: 'Munich', country: 'Germany', lat: 48.135, lon: 11.582, story: 'Technology careers and professional possibilities at the autumn job fair.' },
-    { city: 'Basel', country: 'Switzerland', lat: 47.560, lon: 7.588, story: 'A hands-on microscopy event at ETH Zürich’s Basel campus.' },
-    { city: 'Anacapri', country: 'Italy', lat: 40.552, lon: 14.212, story: 'Research and innovation applied to materials, framed by an island setting.' },
-    { city: 'Amsterdam', country: 'Netherlands', lat: 52.368, lon: 4.904, story: 'Canals, cold light and another city understood on foot.' },
-    { city: 'Istanbul', country: 'Türkiye', lat: 41.008, lon: 28.978, story: 'A threshold between regions, cultures and chapters.' },
-    { city: 'Beijing', country: 'China', lat: 39.904, lon: 116.407, story: 'A long-haul journey expanding the story eastward in 2025.' },
-    { city: 'Sydney', country: 'Australia', lat: -33.869, lon: 151.209, story: 'EMERGENCE Sydney connected investment conversations with an unforgettable harbour.' },
-    { city: 'Tenerife', country: 'Spain', lat: 28.292, lon: -16.629, story: 'A volcanic island chapter in the personal travel archive.' },
-    { city: 'Tromsø', country: 'Norway', lat: 69.649, lon: 18.956, story: 'A winter memory beyond the Arctic Circle — cold, quiet and far north.' },
-    { city: 'Medina', country: 'Saudi Arabia', lat: 24.468, lon: 39.611, story: 'A chapter of faith, reflection and presence.' },
-    { city: 'Dubai', country: 'United Arab Emirates', lat: 25.204, lon: 55.271, story: 'A vertical city where travel portraiture meets professional energy.' }
-  ];
-
   const globeCanvas = $('#globeCanvas');
   const globeContext = globeCanvas.getContext('2d');
   const destinationList = $('#destinationList');
@@ -383,6 +359,7 @@
   function selectDestination(index, rotate = true) {
     globeState.selected = index;
     const destination = destinations[index];
+    journeyAudio.setDestination(destination.city);
     $('#worldIndex').textContent = String(index + 1).padStart(2, '0');
     $('#worldCity').textContent = destination.city;
     $('#worldCountry').textContent = destination.country;
@@ -399,11 +376,12 @@
     button.type = 'button';
     button.textContent = destination.city;
     button.setAttribute('aria-pressed', String(index === 0));
-    button.addEventListener('click', () => selectDestination(index));
+    button.addEventListener('click', () => { selectDestination(index); window.zrFlyTo?.(destination.city,'Dhaka'); });
     destinationList.append(button);
   });
   $('#worldTotal').textContent = String(destinations.length).padStart(2, '0');
 
+  window.zrSelectDestination = city => { const index=destinations.findIndex(d=>d.city===city); if(index>=0)selectDestination(index); };
   const globeWrap = $('#globeWrap');
   let globePointerStart = 0;
   globeWrap.addEventListener('pointerdown', event => {
@@ -435,7 +413,7 @@
       const distance = Math.hypot(point.x - x, point.y - y);
       if (distance < closest.distance) closest = { index, distance };
     });
-    if (closest.index >= 0) selectDestination(closest.index, false);
+    if (closest.index >= 0) {selectDestination(closest.index,false); window.zrFlyTo?.(destinations[closest.index].city);}
   });
   globeWrap.addEventListener('pointercancel', () => { globeState.dragging = false; });
 
@@ -497,62 +475,6 @@
 
   $('#globeReset').addEventListener('click', () => { globeState.auto = true; });
   requestAnimationFrame(drawGlobe);
-
-  /* Optional ambient sound — always starts off */
-  const soundToggle = $('#soundToggle');
-  const soundLabel = $('.sound-label', soundToggle);
-  let audioContext = null;
-  let masterGain = null;
-  let soundOn = false;
-
-  function createAmbientSound() {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    if (!AudioContext) return false;
-    audioContext = new AudioContext();
-    masterGain = audioContext.createGain();
-    masterGain.gain.value = 0;
-
-    const filter = audioContext.createBiquadFilter();
-    filter.type = 'lowpass';
-    filter.frequency.value = 420;
-    filter.Q.value = .6;
-    masterGain.connect(filter).connect(audioContext.destination);
-
-    [55, 82.41, 110].forEach((frequency, index) => {
-      const oscillator = audioContext.createOscillator();
-      const gain = audioContext.createGain();
-      oscillator.type = index === 1 ? 'triangle' : 'sine';
-      oscillator.frequency.value = frequency;
-      oscillator.detune.value = index * 4 - 3;
-      gain.gain.value = index === 0 ? .55 : .2;
-      oscillator.connect(gain).connect(masterGain);
-      oscillator.start();
-    });
-
-    const lfo = audioContext.createOscillator();
-    const lfoGain = audioContext.createGain();
-    lfo.frequency.value = .07;
-    lfoGain.gain.value = 70;
-    lfo.connect(lfoGain).connect(filter.frequency);
-    lfo.start();
-    return true;
-  }
-
-  soundToggle.addEventListener('click', async () => {
-    if (!audioContext && !createAmbientSound()) {
-      soundLabel.textContent = 'Unavailable';
-      return;
-    }
-    await audioContext.resume();
-    soundOn = !soundOn;
-    const now = audioContext.currentTime;
-    masterGain.gain.cancelScheduledValues(now);
-    masterGain.gain.setValueAtTime(masterGain.gain.value, now);
-    masterGain.gain.linearRampToValueAtTime(soundOn ? .035 : 0, now + .8);
-    soundToggle.setAttribute('aria-pressed', String(soundOn));
-    soundToggle.setAttribute('aria-label', soundOn ? 'Turn ambient sound off' : 'Turn ambient sound on');
-    soundLabel.textContent = soundOn ? 'Sound on' : 'Sound off';
-  });
 
   /* Event archive */
   const ticketModal = $('#ticketModal');
@@ -689,207 +611,7 @@
   }
   requestAnimationFrame(drawClosing);
 
-  /* Pilot mode — a small explorable route */
-  const pilot = $('#pilot');
-  const pilotCanvas = $('#pilotCanvas');
-  const pilotContext = pilotCanvas.getContext('2d');
-  const pilotScore = $('#pilotScore');
-  const pilotMessage = $('#pilotMessage');
-  const pilotKeys = { up: false, down: false, left: false, right: false };
-  const pilotPlane = { x: .16, y: .58, vx: 0, vy: 0, angle: 0 };
-  const pilotSignals = [
-    { x: .24, y: .30, label: 'LONDON', found: false },
-    { x: .46, y: .68, label: 'ZÜRICH', found: false },
-    { x: .62, y: .31, label: 'BEIJING', found: false },
-    { x: .79, y: .72, label: 'SYDNEY', found: false },
-    { x: .89, y: .38, label: 'DUBAI', found: false }
-  ];
-  const pilotStars = Array.from({ length: 130 }, () => ({ x: Math.random(), y: Math.random(), r: Math.random() * 1.4 + .2, a: Math.random() * .6 + .15 }));
-  let pilotOpen = false;
-  let pilotAnimation = 0;
-  let pilotLastTime = 0;
-  let pilotReturnFocus = null;
-
-  function resetPilot() {
-    Object.assign(pilotPlane, { x: .12, y: .58, vx: 0, vy: 0, angle: 0 });
-    Object.keys(pilotKeys).forEach(key => { pilotKeys[key] = false; });
-    pilotSignals.forEach(signal => { signal.found = false; });
-    pilotScore.textContent = '0';
-    pilotMessage.textContent = 'Use WASD, arrow keys or the controls to navigate.';
-  }
-
-  function openPilot() {
-    if (pilotOpen) return;
-    pilotReturnFocus = document.activeElement;
-    resetPilot();
-    pilotOpen = true;
-    pilot.classList.add('is-open');
-    pilot.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('pilot-open');
-    $('#closePilot').focus();
-    pilotLastTime = performance.now();
-    pilotAnimation = requestAnimationFrame(drawPilot);
-  }
-
-  function closePilot() {
-    if (!pilotOpen) return;
-    pilotOpen = false;
-    cancelAnimationFrame(pilotAnimation);
-    pilot.classList.remove('is-open');
-    pilot.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('pilot-open');
-    pilotReturnFocus?.focus();
-  }
-
-  function pilotKey(event, active) {
-    const keyMap = {
-      ArrowUp: 'up', w: 'up', W: 'up',
-      ArrowDown: 'down', s: 'down', S: 'down',
-      ArrowLeft: 'left', a: 'left', A: 'left',
-      ArrowRight: 'right', d: 'right', D: 'right'
-    };
-    const direction = keyMap[event.key];
-    if (direction && pilotOpen) {
-      event.preventDefault();
-      pilotKeys[direction] = active;
-    }
-  }
-
-  addEventListener('keydown', event => {
-    if (event.key === 'Escape') {
-      if (pilotOpen) closePilot();
-      else if (lightbox.open) lightbox.close();
-      else if (ticketModal.open) ticketModal.close();
-      else closeMenu();
-    }
-    pilotKey(event, true);
-  });
-  addEventListener('keyup', event => pilotKey(event, false));
-
-  $('#launchPilot').addEventListener('click', openPilot);
-  $('#closePilot').addEventListener('click', closePilot);
-  $$('[data-pilot]').forEach(button => {
-    const direction = button.dataset.pilot;
-    const start = event => {
-      event.preventDefault();
-      pilotKeys[direction] = true;
-      button.setPointerCapture?.(event.pointerId);
-    };
-    const end = event => {
-      pilotKeys[direction] = false;
-      button.releasePointerCapture?.(event.pointerId);
-    };
-    button.addEventListener('pointerdown', start);
-    button.addEventListener('pointerup', end);
-    button.addEventListener('pointercancel', end);
-  });
-
-  function drawPlane(context, x, y, angle, scale = 1) {
-    context.save();
-    context.translate(x, y);
-    context.rotate(angle);
-    context.scale(scale, scale);
-    context.fillStyle = '#f1eee7';
-    context.shadowColor = '#68d7ff';
-    context.shadowBlur = 14;
-    context.beginPath();
-    context.moveTo(19, 0);
-    context.lineTo(-9, -5);
-    context.lineTo(-16, -17);
-    context.lineTo(-21, -17);
-    context.lineTo(-17, -3);
-    context.lineTo(-28, -1);
-    context.lineTo(-28, 2);
-    context.lineTo(-17, 4);
-    context.lineTo(-21, 17);
-    context.lineTo(-16, 17);
-    context.lineTo(-9, 6);
-    context.closePath();
-    context.fill();
-    context.restore();
-  }
-
-  function drawPilot(now) {
-    if (!pilotOpen) return;
-    const { width, height } = fitCanvas(pilotCanvas, pilotContext);
-    const dt = Math.min(2, Math.max(.2, (now - pilotLastTime) / 16.67));
-    pilotLastTime = now;
-    const acceleration = .00032 * dt;
-    if (pilotKeys.up) pilotPlane.vy -= acceleration;
-    if (pilotKeys.down) pilotPlane.vy += acceleration;
-    if (pilotKeys.left) pilotPlane.vx -= acceleration;
-    if (pilotKeys.right) pilotPlane.vx += acceleration;
-    pilotPlane.vx *= Math.pow(.94, dt);
-    pilotPlane.vy *= Math.pow(.94, dt);
-    pilotPlane.vx = clamp(pilotPlane.vx, -.012, .012);
-    pilotPlane.vy = clamp(pilotPlane.vy, -.012, .012);
-    pilotPlane.x = clamp(pilotPlane.x + pilotPlane.vx * dt, .03, .97);
-    pilotPlane.y = clamp(pilotPlane.y + pilotPlane.vy * dt, .14, .95);
-    if (Math.hypot(pilotPlane.vx, pilotPlane.vy) > .0002) pilotPlane.angle = Math.atan2(pilotPlane.vy, pilotPlane.vx);
-
-    pilotContext.clearRect(0, 0, width, height);
-    const sky = pilotContext.createLinearGradient(0, 0, 0, height);
-    sky.addColorStop(0, '#02050a');
-    sky.addColorStop(.62, '#07131d');
-    sky.addColorStop(1, '#101318');
-    pilotContext.fillStyle = sky;
-    pilotContext.fillRect(0, 0, width, height);
-    pilotStars.forEach(star => {
-      const drift = reducedMotion ? 0 : now * .008 * star.r;
-      const x = (star.x * width - drift) % width;
-      pilotContext.fillStyle = `rgba(241,238,231,${star.a})`;
-      pilotContext.beginPath();
-      pilotContext.arc(x < 0 ? x + width : x, star.y * height, star.r, 0, Math.PI * 2);
-      pilotContext.fill();
-    });
-
-    pilotContext.setLineDash([2, 9]);
-    pilotContext.strokeStyle = 'rgba(104,215,255,.16)';
-    pilotContext.beginPath();
-    pilotSignals.forEach((signal, index) => {
-      const x = signal.x * width;
-      const y = signal.y * height;
-      if (index === 0) pilotContext.moveTo(x, y);
-      else pilotContext.lineTo(x, y);
-    });
-    pilotContext.stroke();
-    pilotContext.setLineDash([]);
-
-    let count = 0;
-    pilotSignals.forEach(signal => {
-      const x = signal.x * width;
-      const y = signal.y * height;
-      const distance = Math.hypot((pilotPlane.x - signal.x) * width, (pilotPlane.y - signal.y) * height);
-      if (!signal.found && distance < 34) {
-        signal.found = true;
-        pilotMessage.textContent = `${signal.label} signal connected.`;
-        setTimeout(() => {
-          if (pilotOpen && pilotSignals.some(item => !item.found)) pilotMessage.textContent = 'Keep flying — another signal is waiting.';
-        }, 1400);
-      }
-      if (signal.found) count += 1;
-      const pulse = 9 + Math.sin(now * .004 + signal.x * 10) * 3;
-      pilotContext.strokeStyle = signal.found ? 'rgba(216,179,106,.7)' : 'rgba(104,215,255,.5)';
-      pilotContext.fillStyle = signal.found ? '#d8b36a' : '#68d7ff';
-      pilotContext.beginPath();
-      pilotContext.arc(x, y, pulse, 0, Math.PI * 2);
-      pilotContext.stroke();
-      pilotContext.beginPath();
-      pilotContext.arc(x, y, 2.5, 0, Math.PI * 2);
-      pilotContext.fill();
-      pilotContext.fillStyle = 'rgba(241,238,231,.58)';
-      pilotContext.font = '600 9px Manrope, sans-serif';
-      pilotContext.letterSpacing = '1px';
-      pilotContext.fillText(signal.label, x + 15, y + 4);
-    });
-    pilotScore.textContent = String(count);
-    if (count === pilotSignals.length) pilotMessage.textContent = 'All signals connected. The world is now one route.';
-
-    const speed = 1 + Math.hypot(pilotPlane.vx, pilotPlane.vy) * 35;
-    drawPlane(pilotContext, pilotPlane.x * width, pilotPlane.y * height, pilotPlane.angle, speed);
-    pilotAnimation = requestAnimationFrame(drawPilot);
-  }
-
+  addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});
   /* Keep canvases sharp when the viewport changes */
   let resizeTimer = 0;
   addEventListener('resize', () => {

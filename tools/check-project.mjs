@@ -1,0 +1,21 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import {execFileSync} from 'node:child_process';
+const root=path.resolve(import.meta.dirname,'..');
+const read=p=>fs.readFileSync(path.join(root,p),'utf8');
+const archive=JSON.parse(read('dist/photo-manifest.json'));
+const destinationSource=read('dist/destinations.js').replace("import archive from './photo-manifest.json';",`const archive=${JSON.stringify(archive)};`);
+const url='data:text/javascript;base64,'+Buffer.from(destinationSource).toString('base64');
+const {destinations}=await import(url);
+assert.equal(new Set(destinations.map(d=>d.id)).size,destinations.length);
+let photos=0;
+for(const d of destinations){assert.ok(d.country&&d.story);assert.ok(Math.abs(d.lat)<=90&&Math.abs(d.lon)<=180);assert.equal(new Set(d.photos.map(p=>p.src)).size,d.photos.length);for(const p of d.photos){assert.ok(fs.existsSync(path.join(root,'dist',p.src)),p.src);photos++;}}
+const weatherSource=read('dist/weather.js').replace("import {destinations} from './destinations.js';",`import {destinations} from '${url}';`);
+const {weatherCode,presets}=await import('data:text/javascript;base64,'+Buffer.from(weatherSource).toString('base64'));
+assert.equal(weatherCode(75),'snow');assert.equal(weatherCode(95),'storm');assert.equal(weatherCode(63),'rain');assert.equal(weatherCode(45),'fog');assert.equal(weatherCode(0,0),'night');assert.equal(weatherCode(0,1),'warm');assert.equal(presets.length,15);
+const audios=fs.readdirSync(path.join(root,'dist/assets/audio')).filter(n=>n.endsWith('.mp3'));
+for(const name of audios)execFileSync('ffmpeg',['-v','error','-i',path.join(root,'dist/assets/audio',name),'-f','null','-'],{stdio:'pipe'});
+const html=read('dist/index.html');for(const m of html.matchAll(/(?:src|href)="(\.\/[^"#]+)"/g))assert.ok(fs.existsSync(path.join(root,'dist',m[1])),m[1]);
+for(const file of fs.readdirSync(path.join(root,'dist')).filter(n=>n.endsWith('.js')))execFileSync(process.execPath,['--check',path.join(root,'dist',file)]);
+console.log(JSON.stringify({result:'PASS',destinations:destinations.length,galleryPhotoReferences:photos,weatherPresets:presets.length,decodableMP3s:audios.length,checks:['unique destination IDs','coordinates','gallery asset existence','no duplicate paths per city','WMO weather mapping','HTML local asset references','JavaScript syntax','MP3 decode'],notTested:['browser rendering','audible playback','mobile interaction','FPS','live API network response']},null,2));
