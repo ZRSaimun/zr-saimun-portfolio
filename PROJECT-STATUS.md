@@ -1,7 +1,7 @@
 # Beyond Borders — development checkpoint
 
 ## Release status
-Not production-ready; not deployed, pushed or committed. Development branch: `development/cinematic-v4`.
+GitHub main contains the current v4 implementation. The latest tide-water globe update is committed on main; GitHub Pages deployment is handled by the repository workflow.
 The latest Version 4 brief supersedes earlier overlapping requests. Open-Meteo plus a separate Cinematic Weather Studio is approved.
 
 ## Implemented locally
@@ -10,6 +10,7 @@ The latest Version 4 brief supersedes earlier overlapping requests. Open-Meteo p
 - Country galleries, city navigation, destination search, direct chapter opening, gallery zoom and keyboard navigation.
 - 61 unique uploaded photographs processed in the earlier asset pass; original photos untouched. PHOTO-AUDIT.json records excluded duplicates. Current destination galleries reference 71 photos including existing archive photos.
 - Original stylised grand-tourer and red/white jet models, driving controls, collision damage, breakable displays and repair.
+- Animated full-ocean globe shader with moving swell, refracted highlights and three independent tide rings.
 - Sound manager with 17 bundled MP3s, gesture-based enable, volume, engine pitch and ambience selection.
 - Open-Meteo request flow, 15-minute destination cache, local observation time, timeout and clearly labelled simulated fallback.
 - 15 cinematic preset selections, basic palette/fog/particle responses, snow-density slider and graphics quality control.
@@ -24,7 +25,7 @@ No installed browser was available. Playwright's Chromium download was blocked b
 
 ## Remaining work against the complete brief
 - Real browser integration/visual QA, mobile overlap fixes and error checks are the immediate priority.
-- Current car/jet/environment are stylised procedural models, not photorealistic assets or a licensed Aston Martin model.
+- Current car/jet/environment are stylised procedural models, not photorealistic assets or a licensed Aston Martin model; the tide globe is now a higher-fidelity water treatment.
 - Presets are initial approximations: aurora ribbons, star field, layered snow with accumulation, wind gusts, cloud system, smooth weather blending and destination-specific architecture remain incomplete.
 - No separate music/effects buses or music track are included yet. Recent Pixabay uploads are not copied locally; some existing audio provenance needs confirmation (AUDIO-SOURCES.md).
 - Complete no-WebGL fallback, flight reset/pause/camera modes and full regression coverage remain to be tested/improved.
