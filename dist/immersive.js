@@ -187,7 +187,7 @@ function makeGlobe(parent,radius) {
   return group;
 }
 
-try {startPremiumWorld();} catch(error) {document.querySelector('#webglFallback').hidden=false; console.warn('Driving unavailable',error.message);}
+try {startPremiumWorld();} catch(error) {const fallback=document.querySelector('#webglFallback');fallback.hidden=false;fallback.textContent='Cinematic 3D is unavailable on this device, but every chapter, city photograph, aircraft route and destination control remains available below.';document.querySelector('#home')?.classList.add('world-fallback');console.warn('Driving unavailable',error.message);}
 
 const chapters=[
   {city:'London',country:'United Kingdom',lat:51.507,lon:-.128,title:'Where ambition<br><em>found a home.</em>',copy:'A base in London. A career in cybersecurity. A perspective that reaches beyond one city.',photo:'IMG_4317.webp',alt:'ZR. Saimun beside Tower Bridge in London',position:'60% 42%',color:0x6aaed4},
