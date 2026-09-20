@@ -19,7 +19,7 @@ function tidalWater(radius){
 }
 
 const pilot=$('#pilot');
-pilot.innerHTML=`<canvas id="flightCanvas" tabindex="0" aria-label="Interactive 3D helicopter route. Use the controls below for an accessible alternative."></canvas>
+pilot.innerHTML=`<canvas id="flightCanvas" tabindex="0" aria-label="Interactive 3D aircraft route. Use the controls below for an accessible alternative."></canvas>
  <div class="flight-hud"><p class="eyebrow">ZR–02 / INTERNATIONAL FLIGHT</p><h2 id="flightHeading">Choose your next chapter.</h2><p id="flightRoute" aria-live="polite">Travel between countries by aircraft.</p><button id="closeFlight">Exit flight ×</button></div>
  <div class="flight-telemetry" aria-live="polite"><span id="flightState">STANDBY</span><span id="flightSpeed">0 KM/H</span><span id="flightAltitude">0 M</span><span id="flightProgress">0%</span></div>
  <div class="flight-flight-controls"><label for="flightDestination">Destination</label><select id="flightDestination"></select><button id="takeFlight">Start flight →</button><button id="pauseFlight" aria-pressed="false" disabled>Pause</button><button id="flightCamera" aria-pressed="false">Camera: chase</button><button id="resetFlight" disabled>Restart</button><button id="skipFlight">Enter destination →</button><button data-sound-toggle>Sound off</button></div>
@@ -30,7 +30,7 @@ destinations.forEach(d=>$('#flightDestination').add(new Option(`${d.city} · ${d
 journeyAudio.bindControls();
 
 let open=false,from='London',to='London',progress=0,flying=false,paused=false,last=performance.now(),returnFocus=null;
-let renderer=null,scene,camera,aircraft,path,line,clouds,flightWater,contextLost=false;
+let renderer=null,scene,camera,earth,aircraft,path,line,clouds,flightWater,contextLost=false;
 let throttle=.62,bankInput=0,liftInput=0,bank=0,lift=0,cameraMode=0,currentOrigin='London';
 const keys={left:false,right:false,up:false,down:false,faster:false,slower:false};
 const cameraNames=['chase','orbit','cockpit'];
