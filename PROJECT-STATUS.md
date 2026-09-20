@@ -84,3 +84,8 @@ The original git history is unchanged. A full pre-v4 working-file archive was cr
 - Audio routes vehicle, ambience and effects through separate buses and gives active helicopter audio priority.
 - `PHOTO-REGISTRY.json` is generated from the upload manifest and enforces global source uniqueness; 61 uploaded photographs are registered and 71 destination gallery references remain valid.
 - Automated project validation and production build pass. Browser/live deployment QA remains required before describing this checkpoint as fully tested.
+
+### Vehicle and gallery correction
+- International destination travel uses the red-and-white aircraft again; the helicopter is no longer presented as London-to-Dubai/Santorini transport.
+- A separate “Fly helicopter” world mode now lets the visitor pilot locally with forward/reverse movement, turning, climb/descent, boost, chase camera, keyboard and touch controls.
+- Country atlas cards and country film cards now use available personal photographs as full-bleed covers; city tabs show photo thumbnails instead of text-only empty boxes.
