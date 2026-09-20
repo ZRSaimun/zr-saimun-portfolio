@@ -17,6 +17,12 @@ export function startPremiumWorld(){
  const groundMat=material(0x627367),roadMat=material(0x243238,.37,.12),mountainMat=material(0x455b52),trunkMat=material(0x57483b),treeMat=material(0x385c4e);
  const ground=add(new THREE.CircleGeometry(170,96),groundMat,0,-.13,0);ground.rotation.x=-Math.PI/2;
  const road=add(new THREE.RingGeometry(52,63,160),roadMat,0,0,0);road.rotation.x=-Math.PI/2;
+ // Connected destination-world roads: the ring is the arrival boulevard, while
+ // these cross streets and side roads create a continuous explorable district.
+ const roadGrid=new THREE.Group();scene.add(roadGrid);
+ const street=(w,d,x,z,rotation=0)=>{const mesh=add(new THREE.BoxGeometry(w,.035,d),roadMat,x,.01,z,roadGrid);mesh.rotation.y=rotation;return mesh;};
+ street(18,210,0,0);street(210,18,0,0);street(14,150,-34,0);street(14,150,34,0);street(150,12,0,-34);street(150,12,0,34);
+ for(const [x,z,r] of [[-72,-72,0],[72,-72,0],[-72,72,0],[72,72,0]])street(10,70,x,z,r);
  const gold=material(0xd0bc8d,.45,.4),white=material(0xc2cec7);
  for(let i=0;i<100;i++){const a=i/100*Math.PI*2,o=add(new THREE.BoxGeometry(.1,.025,1.5),white,Math.sin(a)*57.5,.03,Math.cos(a)*57.5);o.rotation.y=a;}
  const water=new THREE.Group();scene.add(water);
