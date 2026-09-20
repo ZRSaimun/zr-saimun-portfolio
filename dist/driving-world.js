@@ -24,29 +24,13 @@ export function startPremiumWorld(){
  const terrain=new THREE.Group();scene.add(terrain);
  for(let i=0;i<30;i++){const a=i*2.39996,r=105+(i%4)*12,h=12+(i*7%22);const hill=add(new THREE.ConeGeometry(12+(i%5),h,6),mountainMat,Math.sin(a)*r,h/2-2,Math.cos(a)*r,terrain);hill.rotation.y=a;}
  for(let i=0;i<85;i++){const a=i*2.39996,r=80+(i%7)*3;const g=new THREE.Group();g.position.set(Math.sin(a)*r,0,Math.cos(a)*r);terrain.add(g);add(new THREE.CylinderGeometry(.12,.23,2.2,6),trunkMat,0,1,0,g);add(new THREE.ConeGeometry(1.5,5,7),treeMat,0,3.6,0,g);}
- // Central sculptural earth and tide rings.
- const earthTexture=new THREE.TextureLoader().load('./assets/earth-atmosphere.jpg');earthTexture.colorSpace=THREE.SRGBColorSpace;
- const waterMaterial=new THREE.ShaderMaterial({
-  uniforms:{uTime:{value:0}},
-  vertexShader:`uniform float uTime; varying vec3 vNormal; varying vec3 vWorld;
-    void main(){vec3 p=position;float swell=sin(p.y*2.7+uTime*.55)*.055+sin((p.x+p.z)*3.4-uTime*.4)*.035;
-    p+=normal*swell;vNormal=normalize(normalMatrix*normal);vWorld=(modelMatrix*vec4(p,1.)).xyz;
-    gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.);}`,
-  fragmentShader:`uniform float uTime; varying vec3 vNormal; varying vec3 vWorld;
-    void main(){vec3 viewDir=normalize(cameraPosition-vWorld);float fres=pow(1.-max(0.,dot(normalize(vNormal),viewDir)),2.2);
-    float current=.5+.5*sin(vWorld.y*1.8+vWorld.x*.75+uTime*.7)+.25*sin(vWorld.z*3.2-uTime*.45);
-    vec3 deep=vec3(.008,.075,.13),blue=vec3(.025,.28,.43),foam=vec3(.48,.86,.9);
-    vec3 colour=mix(deep,blue,.34+current*.12);colour=mix(colour,foam,fres*.6);
-    gl_FragColor=vec4(colour,1.);}`
-});
-const globe=add(new THREE.SphereGeometry(10,64,48),waterMaterial,0,15,0);
-const tideRings=[10.35,10.75,11.2].map((radius,index)=>{
-  const ring=add(new THREE.TorusGeometry(radius,.035+(index===1?.018:0),8,128),
-    new THREE.MeshBasicMaterial({color:index===1?0xb8f5f2:0x52c9e2,transparent:true,opacity:.2,depthWrite:false}),
-    0,15,0);
-  ring.rotation.set(.35+index*.32,index*.78,-.2+index*.24);
-  return ring;
-});
+ // Cinematic tidal sculpture: deliberately exaggerated, never presented as live tidal science.
+ const tidalMaterial=new THREE.ShaderMaterial({
+  uniforms:{time:{value:0},radius:{value:10}},
+  vertexShader:`uniform float time;uniform float radius;varying vec3 surface;varying vec3 localPoint;varying float crest;void main(){vec3 n=normalize(position);vec3 moon=normalize(vec3(.25*sin(time*.18),1.,.18*cos(time*.18)));float alignment=dot(n,moon);float bulge=.24*pow(max(alignment,0.),12.)+.055*pow(max(-alignment,0.),8.);float waves=sin(n.x*31.+time*1.3+sin(n.z*17.-time))*.008+sin(n.y*47.-time*1.7+n.z*21.)*.005;vec3 p=n*radius*(1.+bulge+waves);crest=bulge;localPoint=n;surface=(modelViewMatrix*vec4(p,1.)).xyz;gl_Position=projectionMatrix*vec4(surface,1.);}`,
+  fragmentShader:`uniform float time;varying vec3 surface;varying vec3 localPoint;varying float crest;void main(){vec3 n=normalize(cross(dFdx(surface),dFdy(surface)));if(!gl_FrontFacing)n=-n;vec3 v=normalize(-surface),light=normalize(vec3(-.5,.8,1.));float fresnel=.02+.98*pow(1.-max(dot(n,v),0.),5.);float spec=pow(max(dot(n,normalize(light+v)),0.),95.);float veins=abs(sin(localPoint.x*95.+sin(localPoint.z*63.+time)*2.+time*.9)*sin(localPoint.y*83.-localPoint.z*31.-time*1.1));float foam=(1.-smoothstep(.015,.085,veins))*smoothstep(.035,.20,crest);vec3 colour=mix(vec3(.003,.025,.033),vec3(.025,.16,.17),max(dot(n,light),0.));colour+=vec3(.19,.34,.35)*fresnel+vec3(1.,.96,.84)*spec*.95;colour=mix(colour,vec3(.72,.83,.8),foam*.8);gl_FragColor=vec4(colour,1.);}`
+ });
+ const globe=add(new THREE.SphereGeometry(10,128,96),tidalMaterial,0,15,0);
  add(new THREE.CylinderGeometry(8,11,3,48),material(0x304a4d),0,1.4,0);
  const orbit=add(new THREE.TorusGeometry(13,.055,6,100),gold,0,15,0);orbit.rotation.x=1.1;
  const aircraft=makePlane(scene,1.3);
@@ -106,7 +90,7 @@ const tideRings=[10.35,10.75,11.2].map((radius,index)=>{
  function frame(now){requestAnimationFrame(frame);const dt=Math.min(.035,(now-last)/1000);last=now;const on=visible(),stop=blocked()||window.zrMotionPaused||!on;
   if(now-lastMix>100){journeyAudio.setVehicle('world',{active:on&&!stop,speed,throttle:inputs.up||stickY,boost:inputs.boost,braking:inputs.brake||inputs.down});lastMix=now;}if(!on)return;
   const w=canvas.clientWidth,h=canvas.clientHeight;if(canvas.width!==Math.round(w*renderer.getPixelRatio())||canvas.height!==Math.round(h*renderer.getPixelRatio())){renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();}
-  if(!stop){time+=dt;waterMaterial.uniforms.uTime.value=time;globe.rotation.y+=dt*.045;orbit.rotation.z+=dt*.06;tideRings.forEach((ring,index)=>{ring.rotation.x+=dt*(.08+index*.025);ring.rotation.z-=dt*(.12+index*.03);ring.material.opacity=.12+.08*Math.sin(time*1.5+index);});aircraft.position.set(Math.sin(time*.2)*15,16+Math.sin(time*.15)*4,Math.cos(time*.2)*15);aircraft.rotation.set(.1,time*.2+Math.PI/2,-.18);
+  if(!stop){time+=dt;tidalMaterial.uniforms.time.value=time;globe.rotation.y+=dt*.018;orbit.rotation.z+=dt*.06;aircraft.position.set(Math.sin(time*.2)*15,16+Math.sin(time*.15)*4,Math.cos(time*.2)*15);aircraft.rotation.set(.1,time*.2+Math.PI/2,-.18);
    const throttle=(inputs.up?1:0)-(inputs.down?1:0)+stickY,steer=(inputs.left?1:0)-(inputs.right?1:0)-stickX;
    if(mode==='tour'){tourAngle+=dt*.025;rig.car.position.set(Math.sin(tourAngle)*57.5,.06,Math.cos(tourAngle)*57.5);heading=tourAngle-Math.PI/2;speed=3;}else{const friction=weather==='snow'?.994:.985;speed+=throttle*11*dt;speed*=Math.pow(inputs.brake?.8:throttle?friction:.96,dt*60);speed=clamp(speed,-8,inputs.boost?25:16);heading+=steer*dt*1.15*clamp(Math.abs(speed)/5,0,1)*Math.sign(speed||1);rig.car.position.x-=Math.sin(heading)*speed*dt;rig.car.position.z-=Math.cos(heading)*speed*dt;const r=Math.hypot(rig.car.position.x,rig.car.position.z);if(r>94||r<14){const bound=r>94?94:14;rig.car.position.x*=bound/Math.max(r,.1);rig.car.position.z*=bound/Math.max(r,.1);impact(Math.abs(speed));speed*=-.3;}}
    rig.car.rotation.set(Math.sin(time*12)*Math.abs(speed)*.0006,heading,-steer*Math.abs(speed)*.003);rig.wheels.forEach(w=>w.rotation.x-=speed*dt/.47);rig.front.forEach(w=>w.rotation.y=lerp(w.rotation.y,steer*.33,dt*6));rig.brakes.emissiveIntensity=inputs.brake||inputs.down?4:.6;
