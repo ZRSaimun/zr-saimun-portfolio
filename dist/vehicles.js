@@ -51,3 +51,20 @@ export function makePlane(parent,scale=.6){
  for(const x of [-.253,.253])box(plane,.02,.045,2.8,red,x,-.015,0);
  return plane;
 }
+
+export function makeHelicopter(parent,scale=.65){
+ const heli=new THREE.Group();heli.scale.setScalar(scale);parent.add(heli);
+ const paint=new THREE.MeshPhysicalMaterial({color:0x263a43,metalness:.72,roughness:.27,clearcoat:.65,clearcoatRoughness:.18});
+ const glass=new THREE.MeshPhysicalMaterial({color:0x102733,metalness:.22,roughness:.08,transparent:true,opacity:.82,clearcoat:1});
+ const trim=mat(0xd4b878,.72,.25),dark=mat(0x12191d,.35,.62),lamp=new THREE.MeshStandardMaterial({color:0xe8f4f2,emissive:0xb9ffff,emissiveIntensity:3});
+ const body=part(heli,new THREE.SphereGeometry(.72,28,18),paint,0,.1,0);body.scale.set(1.05,.7,1.65);
+ const cockpit=part(heli,new THREE.SphereGeometry(.58,28,18),glass,0,.19,-.58);cockpit.scale.set(.9,.68,1.1);
+ const tail=box(heli,.16,.18,3.45,paint,0,.22,1.8);tail.rotation.x=-.075;
+ const fin=box(heli,.08,.82,.72,paint,0,.68,3.2);fin.rotation.x=-.28;
+ const tailRotor=new THREE.Group();tailRotor.position.set(.03,.42,3.28);heli.add(tailRotor);for(let i=0;i<4;i++){const blade=box(tailRotor,.055,.82,.028,dark,0,0,0);blade.rotation.z=i*Math.PI/2;} 
+ const mast=box(heli,.13,.72,.13,dark,0,.9,.05);const rotor=new THREE.Group();rotor.position.set(0,1.28,.05);heli.add(rotor);for(let i=0;i<4;i++){const blade=box(rotor,.095,.025,4.7,dark,0,0,0);blade.rotation.y=i*Math.PI/2+.12;}
+ for(const x of [-.63,.63]){const skid=box(heli,.08,.08,2.1,dark,x,-.55,.25);const strut=box(heli,.055,.72,.055,dark,x,-.21,.1);strut.rotation.z=x*.55;}
+ for(const x of [-.56,.56])box(heli,.2,.09,.08,lamp,x,.04,-1.05);
+ const beacon=part(heli,new THREE.SphereGeometry(.055,12,8),new THREE.MeshStandardMaterial({color:0xc42c35,emissive:0xd31425,emissiveIntensity:3}),0,1.03,.85);
+ return {heli,rotor,tailRotor,beacon};
+}
