@@ -53,6 +53,14 @@ export function startPremiumWorld(){
  $('#worldReset').textContent='Repair / reset';$('#driveJump').textContent='Brake';$('#driveJump').setAttribute('aria-label','Hold to brake');
  const full=document.createElement('button');full.id='driveFullscreen';full.textContent='Expand drive';$('.world-tools').append(full);full.onclick=()=>{home.classList.toggle('drive-expanded');full.textContent=home.classList.contains('drive-expanded')?'Exit drive':'Expand drive';document.body.classList.toggle('drive-expanded-open',home.classList.contains('drive-expanded'));};
  const inputs={up:false,down:false,left:false,right:false,boost:false,brake:false};let stickX=0,stickY=0,speed=0,heading=Math.PI/2,mode='tour',tourAngle=0,damage=0,shake=0,activeCity=destinations[0],nearest=-1,weather='rain',last=performance.now(),time=0,lastMix=0,lastImpact=-10;
+ const destinationTheme=city=>{
+  if(/Tromsø|Tromso|Oslo|Stockholm/.test(city))return {sky:0x6e8798,ground:0xb9c8ca,trees:0x9bb4b2,road:0x56636b,exposure:.88};
+  if(/Dubai|Medina/.test(city))return {sky:0xc9a77a,ground:0xbf965e,trees:0x7a7253,road:0x5a4b3c,exposure:1.18};
+  if(/Santorini|Corfu|Athens|Tenerife|Sydney/.test(city))return {sky:0x6dacc2,ground:0x728d72,trees:0x3d6d61,road:0x364448,exposure:1.15};
+  if(/London|Paris|Madrid|Milan|Amsterdam|Geneva|Zürich|Zurich/.test(city))return {sky:0x6b8390,ground:0x627367,trees:0x405d50,road:0x273238,exposure:1.0};
+  return {sky:0x709eae,ground:0x627367,trees:0x385c4e,road:0x253238,exposure:1.0};
+ };
+ function applyDestinationTheme(){const theme=destinationTheme(activeCity.city);renderer.toneMappingExposure=theme.exposure;if(weather!=='snow'&&weather!=='desert'){sky.set(theme.sky);scene.fog.color.copy(sky);groundMat.color.set(theme.ground);treeMat.color.set(theme.trees);roadMat.color.set(theme.road);}$('#driveWeather').textContent=`${activeCity.city.toUpperCase()} / ${weather.toUpperCase()}`;}
  const shards=[],shardGeometry=new THREE.BufferGeometry();shardGeometry.setAttribute('position',new THREE.Float32BufferAttribute([-.15,0,0,.15,0,0,0,.4,0],3));shardGeometry.computeVertexNormals();const shardMat=new THREE.MeshStandardMaterial({color:0xc8f0ef,metalness:.5,roughness:.1,side:THREE.DoubleSide,transparent:true,opacity:.8});
  const particleCount=innerWidth<760?500:1000,positions=new Float32Array(particleCount*3);for(let i=0;i<particleCount;i++){positions[i*3]=(Math.random()-.5)*130;positions[i*3+1]=Math.random()*45;positions[i*3+2]=(Math.random()-.5)*130;}
  const particleGeo=new THREE.BufferGeometry();particleGeo.setAttribute('position',new THREE.BufferAttribute(positions,3));const particleMat=new THREE.PointsMaterial({color:0xd9e7ef,size:.17,transparent:true,opacity:.75,depthWrite:false});const particles=new THREE.Points(particleGeo,particleMat);scene.add(particles);
@@ -68,12 +76,12 @@ export function startPremiumWorld(){
   scene.fog.density=preset==='blizzard'?.035:preset==='fog'?.045:preset==='sandstorm'?.027:rain?.014:.006;
   sun.intensity=night?.25:preset==='storm'?1:3;ambient.intensity=night?.6:2.5;particleMat.size=snow?.25:rain?.1:.14;
   particleGeo.setDrawRange(0,Math.round(particleCount*(preset==='light-snow'?.25:1)*(window.zrSnowIntensity||.65)));
-  $('#driveWeather').textContent=`${activeCity.city.toUpperCase()} / ${preset.toUpperCase()}`;
+  applyDestinationTheme();$('#driveWeather').textContent=`${activeCity.city.toUpperCase()} / ${preset.toUpperCase()}`;
  }
  attachWeather(studioWeather);
  const quality=document.createElement('label');quality.innerHTML='GRAPHICS <select id="graphicsQuality"><option value="auto">Adaptive</option><option value="low">Low · battery saver</option><option value="high">High</option></select>';selector.append(quality);
  $('#graphicsQuality').onchange=e=>{const low=e.target.value==='low';renderer.setPixelRatio(low?1:Math.min(devicePixelRatio,e.target.value==='high'?2:innerWidth<760?1.5:2));renderer.shadowMap.enabled=!low;particleGeo.setDrawRange(0,Math.round(particleCount*(low?.25:window.zrSnowIntensity||.65)));};
- function travel(i){const g=gates[i];if(!g)return;activeCity=g.d;tourAngle=g.angle;rig.car.position.set(Math.sin(g.angle)*57.5,.06,Math.cos(g.angle)*57.5);heading=g.angle-Math.PI/2;speed=0;$('#driveDestination').value=String(i);announceDestination(activeCity.city);}
+ function travel(i){const g=gates[i];if(!g)return;activeCity=g.d;tourAngle=g.angle;rig.car.position.set(Math.sin(g.angle)*57.5,.06,Math.cos(g.angle)*57.5);heading=g.angle-Math.PI/2;speed=0;$('#driveDestination').value=String(i);studioWeather();announceDestination(activeCity.city);}
  $('#driveTravel').onclick=()=>travel(Number($('#driveDestination').value));
  function setMode(v){mode=v;speed=0;tourAngle=Math.atan2(rig.car.position.x,rig.car.position.z);$('#driveMode').setAttribute('aria-pressed',String(v==='drive'));$('#tourMode').setAttribute('aria-pressed',String(v==='tour'));home.classList.toggle('is-driving',v==='drive');$('#joystick').classList.toggle('is-driving',v==='drive');$('#driveJump').classList.toggle('is-driving',v==='drive');$('#driveHint').textContent=v==='drive'?'WASD / arrows · Shift boost · Space brake · Enter city':'A guided tour · choose any city';}
  $('#driveMode').onclick=()=>setMode('drive');$('#tourMode').onclick=()=>setMode('tour');
