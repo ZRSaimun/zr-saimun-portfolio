@@ -23,7 +23,10 @@ export function startPremiumWorld(){
  for(let j=0;j<5;j++){const o=add(new THREE.RingGeometry(143+j*4,145+j*4,100),new THREE.MeshStandardMaterial({color:0x35898f,roughness:.19,metalness:.5,transparent:true,opacity:.6}),0,-.05,0,water);o.rotation.x=-Math.PI/2;}
  const terrain=new THREE.Group();scene.add(terrain);
  for(let i=0;i<30;i++){const a=i*2.39996,r=105+(i%4)*12,h=12+(i*7%22);const hill=add(new THREE.ConeGeometry(12+(i%5),h,6),mountainMat,Math.sin(a)*r,h/2-2,Math.cos(a)*r,terrain);hill.rotation.y=a;}
- for(let i=0;i<85;i++){const a=i*2.39996,r=80+(i%7)*3;const g=new THREE.Group();g.position.set(Math.sin(a)*r,0,Math.cos(a)*r);terrain.add(g);add(new THREE.CylinderGeometry(.12,.23,2.2,6),trunkMat,0,1,0,g);add(new THREE.ConeGeometry(1.5,5,7),treeMat,0,3.6,0,g);}
+ for(let i=0;i<96;i++){const a=i*2.39996,r=80+(i%7)*3;const g=new THREE.Group(),scale=.72+(i%5)*.12;g.position.set(Math.sin(a)*r,0,Math.cos(a)*r);g.scale.setScalar(scale);terrain.add(g);add(new THREE.CylinderGeometry(.12,.23,2.7,8),trunkMat,0,1.25,0,g);for(let layer=0;layer<3;layer++)add(new THREE.ConeGeometry(1.85-layer*.32,2.7,9),treeMat,0,2.7+layer*1.15,0,g);}
+ const guard=material(0x9da9a8,.65,.3),lampMetal=material(0x2a363a,.8,.28),lampGlow=new THREE.MeshStandardMaterial({color:0xffe3ad,emissive:0xffbc68,emissiveIntensity:2.4});
+ for(let i=0;i<40;i++){const a=i/40*Math.PI*2,r=64;const post=add(new THREE.CylinderGeometry(.055,.055,.72,6),guard,Math.sin(a)*r,.34,Math.cos(a)*r);post.rotation.y=a;const rail=add(new THREE.BoxGeometry(1.2,.07,.08),guard,Math.sin(a)*r,.62,Math.cos(a)*r);rail.rotation.y=-a;}
+ for(let i=0;i<12;i++){const a=i/12*Math.PI*2,r=49;const pole=add(new THREE.CylinderGeometry(.08,.11,5.6,8),lampMetal,Math.sin(a)*r,2.8,Math.cos(a)*r);const head=add(new THREE.SphereGeometry(.22,12,8),lampGlow,Math.sin(a)*r,5.6,Math.cos(a)*r);const light=new THREE.PointLight(0xffc476,.45,16,2);light.position.copy(head.position);scene.add(light);}
  // Photographic Earth remains visible; the water layer animates only where the map contains ocean.
  const earthTexture=new THREE.TextureLoader().load('./assets/earth-atmosphere.jpg');earthTexture.colorSpace=THREE.SRGBColorSpace;
  const globe=add(new THREE.SphereGeometry(10,96,72),new THREE.MeshStandardMaterial({map:earthTexture,roughness:.52,metalness:.08}),0,15,0);
