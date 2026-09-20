@@ -42,3 +42,36 @@ No installed browser was available. Playwright's Chromium download was blocked b
 
 ## Recovery
 The original git history is unchanged. A full pre-v4 working-file archive was created at `../portfolio-before-v4.tar.gz`, excluding dependencies/build/git metadata. Restore into a separate folder to compare; do not overwrite the current worktree. Production publication requires separate explicit approval.
+
+
+## Integrated Version 4.0 release checkpoint — 20 September 2026
+
+### Current branch
+- Development branch: `release/v4-cinematic-world`
+- Live production remains on `main`; do not merge or publish until the integrated release passes browser, mobile, audio and performance checks.
+
+### Implemented on the release branch
+- Textured Earth globe retained; animated ocean-only tidal overlay with moving current, reflective highlights and exaggerated cinematic bulge.
+- Original civilian helicopter model with main/tail rotors, cockpit glass, lights and destination travel controls.
+- Destination portals with proximity glow and arrival transition.
+- Destination profiles change world lighting, ground, trees, asphalt, exposure and weather behaviour.
+- Photo chapter action: “Enter [city] road scene” returns to that destination’s drive scene.
+- Gallery handling for unavailable photographs and hidden broken thumbnails.
+- Layered procedural trees, road guardrails and warm street lighting.
+
+### Verified
+- `npm run build -- --base=/zr-saimun-portfolio/` passes.
+- `node tools/check-project.mjs` passes: 28 destinations, 71 photo references, 15 weather presets, 17 decodable MP3 files, asset paths and JavaScript syntax.
+
+### Still required before publishing Version 4.0
+- Browser visual QA on WebGL-capable desktop and real mobile device.
+- Confirm helicopter flight handling, touch controls and camera modes.
+- Confirm audio unlock, looping ambience, effects and volume controls on iOS/Safari.
+- Test every destination portal and photo chapter end-to-end.
+- Improve destination scenes beyond the shared procedural environment where verified assets exist.
+- Performance/FPS/memory checks, reduced motion, keyboard navigation and no-WebGL fallback.
+- Review uploaded image additions before adding them to the authoritative photo registry.
+
+### Important boundaries
+- Use original assets and legally licensed/open map data; do not copy GTA, Asphalt 9, Google Maps or military helicopter assets.
+- Do not claim literal 4D/5D or live weather when the scene is cinematic simulation.
