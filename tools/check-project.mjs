@@ -5,6 +5,9 @@ import {execFileSync} from 'node:child_process';
 const root=path.resolve(import.meta.dirname,'..');
 const read=p=>fs.readFileSync(path.join(root,p),'utf8');
 const archive=JSON.parse(read('dist/photo-manifest.json'));
+const registry=JSON.parse(read('PHOTO-REGISTRY.json'));
+assert.equal(registry.schemaVersion,1);assert.equal(registry.photoCount,registry.records.length);assert.equal(new Set(registry.records.map(p=>p.src)).size,registry.records.length);
+for(const photo of registry.records)assert.ok(fs.existsSync(path.join(root,'dist',photo.src)),photo.src);
 const destinationSource=read('dist/destinations.js').replace("import archive from './photo-manifest.json';",`const archive=${JSON.stringify(archive)};`);
 const url='data:text/javascript;base64,'+Buffer.from(destinationSource).toString('base64');
 const {destinations}=await import(url);
@@ -18,4 +21,4 @@ const audios=fs.readdirSync(path.join(root,'dist/assets/audio')).filter(n=>n.end
 for(const name of audios)execFileSync('ffmpeg',['-v','error','-i',path.join(root,'dist/assets/audio',name),'-f','null','-'],{stdio:'pipe'});
 const html=read('dist/index.html');for(const m of html.matchAll(/(?:src|href)="(\.\/[^"#]+)"/g))assert.ok(fs.existsSync(path.join(root,'dist',m[1])),m[1]);
 for(const file of fs.readdirSync(path.join(root,'dist')).filter(n=>n.endsWith('.js')))execFileSync(process.execPath,['--check',path.join(root,'dist',file)]);
-console.log(JSON.stringify({result:'PASS',destinations:destinations.length,galleryPhotoReferences:photos,weatherPresets:presets.length,decodableMP3s:audios.length,checks:['unique destination IDs','coordinates','gallery asset existence','no duplicate paths per city','WMO weather mapping','HTML local asset references','JavaScript syntax','MP3 decode'],notTested:['browser rendering','audible playback','mobile interaction','FPS','live API network response']},null,2));
+console.log(JSON.stringify({result:'PASS',destinations:destinations.length,registeredUploadedPhotos:registry.photoCount,galleryPhotoReferences:photos,weatherPresets:presets.length,decodableMP3s:audios.length,checks:['unique destination IDs','coordinates','gallery asset existence','authoritative photo registry','global uploaded-photo uniqueness','no duplicate paths per city','WMO weather mapping','HTML local asset references','JavaScript syntax','MP3 decode'],notTested:['browser rendering','audible playback','real-device mobile interaction','sustained FPS/memory','live API network response']},null,2));

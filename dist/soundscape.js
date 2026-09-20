@@ -9,7 +9,7 @@ class JourneyAudio {
   constructor() {
     this.enabled=false; this.loading=false; this.volume=.65; this.city='London';
     this.buffers=new Map(); this.loops=new Map(); this.vehicles=new Map(); this.cooldowns=new Map(); this.voices=new Set();
-    this.context=null; this.master=null; this.error=''; this.request=0;
+    this.context=null; this.master=null; this.vehicleBus=null; this.ambienceBus=null; this.effectsBus=null; this.error=''; this.request=0;
     try { this.volume=clamp(Number(localStorage.getItem('zr-volume') || .65),0,1); } catch {}
     this.previousSpeed=0; this.previousBoost=false;
     this.bindControls();
@@ -50,6 +50,9 @@ class JourneyAudio {
     this.context=new Context();
     try { if(navigator.audioSession)navigator.audioSession.type='playback'; } catch {}
     this.master=this.context.createGain();this.master.gain.value=0;
+    this.vehicleBus=this.context.createGain();this.ambienceBus=this.context.createGain();this.effectsBus=this.context.createGain();
+    this.vehicleBus.gain.value=.9;this.ambienceBus.gain.value=.72;this.effectsBus.gain.value=.86;
+    this.vehicleBus.connect(this.master);this.ambienceBus.connect(this.master);this.effectsBus.connect(this.master);
     const compressor=this.context.createDynamicsCompressor();
     compressor.threshold.value=-12;compressor.knee.value=14;compressor.ratio.value=4;compressor.attack.value=.01;compressor.release.value=.25;
     this.analyser=this.context.createAnalyser();this.analyser.fftSize=256;
@@ -75,7 +78,7 @@ class JourneyAudio {
       if(this.loops.has(name))return;
       const source=this.context.createBufferSource(),gain=this.context.createGain();
       source.buffer=this.buffers.get(name);source.loop=true;gain.gain.value=0;
-      source.connect(gain);gain.connect(this.master);source.start();
+      source.connect(gain);gain.connect(name.includes('engine')?this.vehicleBus:this.ambienceBus);source.start();
       this.loops.set(name,{source,gain});
     });
   }
@@ -125,8 +128,8 @@ class JourneyAudio {
     if(!this.master)return;
     const audible=this.enabled&&!document.hidden;
     this.level(this.master.gain,audible?this.volume:0,.045);
-    const road=this.vehicles.get('road');
-    const vehicle=road?.active?road:this.vehicles.get('world');
+    const road=this.vehicles.get('road'),flight=this.vehicles.get('flight');
+    const vehicle=flight?.active?flight:road?.active?road:this.vehicles.get('world');
     const active=!!vehicle?.active&&!window.zrMotionPaused&&!document.querySelector('dialog[open]');
     const velocity=active?Math.abs(vehicle.speed||0):0;
     const rev=clamp(velocity/21,0,1),throttle=active?Math.abs(vehicle.throttle||0):0;
@@ -154,7 +157,7 @@ class JourneyAudio {
     source.buffer=this.buffers.get(name);source.playbackRate.value=options.rate||1;volume.gain.value=clamp(gain,0,.8);
     source.connect(volume);
     let pan=null;
-    if(this.context.createStereoPanner){pan=this.context.createStereoPanner();pan.pan.value=clamp(options.pan||0,-1,1);volume.connect(pan);pan.connect(this.master);}else volume.connect(this.master);
+    if(this.context.createStereoPanner){pan=this.context.createStereoPanner();pan.pan.value=clamp(options.pan||0,-1,1);volume.connect(pan);pan.connect(this.effectsBus);}else volume.connect(this.effectsBus);
     this.voices.add(source);source.onended=()=>{source.disconnect();volume.disconnect();pan?.disconnect();this.voices.delete(source);};source.start();
   }
 }

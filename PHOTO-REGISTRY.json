@@ -1,0 +1,526 @@
+{
+  "schemaVersion": 1,
+  "generatedFrom": "dist/photo-manifest.json",
+  "photoCount": 61,
+  "collections": {
+    "Türkiye": 1,
+    "NTV": 1,
+    "Tromsø": 7,
+    "Madrid": 1,
+    "Paris": 1,
+    "Tenerife": 2,
+    "London": 8,
+    "Madinah": 3,
+    "Makkah": 3,
+    "Santorini": 9,
+    "Sydney": 9,
+    "Beijing": 3,
+    "Milan": 3,
+    "Istanbul": 5,
+    "Barcelona": 5
+  },
+  "duplicatesExcluded": [
+    {
+      "excluded": "IMG_0678(1).jpeg",
+      "canonical": "IMG_0678.jpeg"
+    },
+    {
+      "excluded": "IMG_1026(1).jpeg",
+      "canonical": "IMG_1026.jpeg"
+    },
+    {
+      "excluded": "IMG_0977(1).jpeg",
+      "canonical": "IMG_0977.jpeg"
+    }
+  ],
+  "records": [
+    {
+      "id": "archive-F31B4B57-CF6D-4182-B036-C0D800889457",
+      "collection": "Madrid",
+      "src": "./assets/photos/archive-F31B4B57-CF6D-4182-B036-C0D800889457.webp",
+      "caption": "Madrid · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "F31B4B57-CF6D-4182-B036-C0D800889457.jpeg"
+    },
+    {
+      "id": "archive-FullSizeRender-1",
+      "collection": "London",
+      "src": "./assets/photos/archive-FullSizeRender-1.webp",
+      "caption": "Graduation day · London",
+      "kind": "Personal photograph",
+      "original": "FullSizeRender(1).jpeg"
+    },
+    {
+      "id": "archive-FullSizeRender-2",
+      "collection": "London",
+      "src": "./assets/photos/archive-FullSizeRender-2.webp",
+      "caption": "Graduation day · London",
+      "kind": "Personal photograph",
+      "original": "FullSizeRender(2).jpeg"
+    },
+    {
+      "id": "archive-FullSizeRender-3",
+      "collection": "London",
+      "src": "./assets/photos/archive-FullSizeRender-3.webp",
+      "caption": "Graduation day · London",
+      "kind": "Personal photograph",
+      "original": "FullSizeRender(3).jpeg"
+    },
+    {
+      "id": "archive-FullSizeRender",
+      "collection": "London",
+      "src": "./assets/photos/archive-FullSizeRender.webp",
+      "caption": "Graduation day · London",
+      "kind": "Personal photograph",
+      "original": "FullSizeRender.jpeg"
+    },
+    {
+      "id": "archive-IMG_0516",
+      "collection": "Tromsø",
+      "src": "./assets/photos/archive-IMG_0516.webp",
+      "caption": "Tromsø · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_0516.jpeg"
+    },
+    {
+      "id": "archive-IMG_0526",
+      "collection": "Tromsø",
+      "src": "./assets/photos/archive-IMG_0526.webp",
+      "caption": "Tromsø · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_0526.jpeg"
+    },
+    {
+      "id": "archive-IMG_0539",
+      "collection": "Tromsø",
+      "src": "./assets/photos/archive-IMG_0539.webp",
+      "caption": "Tromsø · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_0539.jpeg"
+    },
+    {
+      "id": "archive-IMG_0560",
+      "collection": "Tromsø",
+      "src": "./assets/photos/archive-IMG_0560.webp",
+      "caption": "Tromsø · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_0560.jpeg"
+    },
+    {
+      "id": "archive-IMG_0567",
+      "collection": "Tromsø",
+      "src": "./assets/photos/archive-IMG_0567.webp",
+      "caption": "Tromsø · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_0567.jpeg"
+    },
+    {
+      "id": "archive-IMG_0578",
+      "collection": "Tromsø",
+      "src": "./assets/photos/archive-IMG_0578.webp",
+      "caption": "Tromsø · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_0578.jpeg"
+    },
+    {
+      "id": "archive-IMG_0678",
+      "collection": "Santorini",
+      "src": "./assets/photos/archive-IMG_0678.webp",
+      "caption": "Santorini · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_0678.jpeg"
+    },
+    {
+      "id": "archive-IMG_0682",
+      "collection": "Santorini",
+      "src": "./assets/photos/archive-IMG_0682.webp",
+      "caption": "Santorini · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_0682.jpeg"
+    },
+    {
+      "id": "archive-IMG_0691",
+      "collection": "Santorini",
+      "src": "./assets/photos/archive-IMG_0691.webp",
+      "caption": "Santorini · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_0691.jpeg"
+    },
+    {
+      "id": "archive-IMG_0746",
+      "collection": "Santorini",
+      "src": "./assets/photos/archive-IMG_0746.webp",
+      "caption": "Santorini · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_0746.jpeg"
+    },
+    {
+      "id": "archive-IMG_0762",
+      "collection": "Santorini",
+      "src": "./assets/photos/archive-IMG_0762.webp",
+      "caption": "Santorini · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_0762.jpeg"
+    },
+    {
+      "id": "archive-IMG_0805",
+      "collection": "Tromsø",
+      "src": "./assets/photos/archive-IMG_0805.webp",
+      "caption": "Tromsø · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_0805.jpeg"
+    },
+    {
+      "id": "archive-IMG_0931",
+      "collection": "NTV",
+      "src": "./assets/photos/archive-IMG_0931.webp",
+      "caption": "NTV · A short professional chapter",
+      "kind": "Personal photograph",
+      "original": "IMG_0931.jpeg"
+    },
+    {
+      "id": "archive-IMG_0977",
+      "collection": "Milan",
+      "src": "./assets/photos/archive-IMG_0977.webp",
+      "caption": "Milan · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_0977.jpeg"
+    },
+    {
+      "id": "archive-IMG_1011-1",
+      "collection": "Milan",
+      "src": "./assets/photos/archive-IMG_1011-1.webp",
+      "caption": "Milan · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_1011(1).jpeg"
+    },
+    {
+      "id": "archive-IMG_1026",
+      "collection": "Milan",
+      "src": "./assets/photos/archive-IMG_1026.webp",
+      "caption": "Milan · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_1026.jpeg"
+    },
+    {
+      "id": "archive-IMG_1351",
+      "collection": "Türkiye",
+      "src": "./assets/photos/archive-IMG_1351.webp",
+      "caption": "Türkiye · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_1351.jpeg"
+    },
+    {
+      "id": "archive-IMG_1457",
+      "collection": "Makkah",
+      "src": "./assets/photos/archive-IMG_1457.webp",
+      "caption": "Makkah · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_1457.jpeg"
+    },
+    {
+      "id": "archive-IMG_1676",
+      "collection": "Makkah",
+      "src": "./assets/photos/archive-IMG_1676.webp",
+      "caption": "Makkah · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_1676.jpeg"
+    },
+    {
+      "id": "archive-IMG_1745",
+      "collection": "Makkah",
+      "src": "./assets/photos/archive-IMG_1745.webp",
+      "caption": "Makkah · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_1745.jpeg"
+    },
+    {
+      "id": "archive-IMG_1789",
+      "collection": "Madinah",
+      "src": "./assets/photos/archive-IMG_1789.webp",
+      "caption": "Madinah · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_1789.jpeg"
+    },
+    {
+      "id": "archive-IMG_1795",
+      "collection": "Madinah",
+      "src": "./assets/photos/archive-IMG_1795.webp",
+      "caption": "Madinah · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_1795.jpeg"
+    },
+    {
+      "id": "archive-IMG_1817",
+      "collection": "Madinah",
+      "src": "./assets/photos/archive-IMG_1817.webp",
+      "caption": "Madinah · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_1817.jpeg"
+    },
+    {
+      "id": "archive-IMG_3625",
+      "collection": "London",
+      "src": "./assets/photos/archive-IMG_3625.webp",
+      "caption": "London · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_3625.jpeg"
+    },
+    {
+      "id": "archive-IMG_3626",
+      "collection": "London",
+      "src": "./assets/photos/archive-IMG_3626.webp",
+      "caption": "London · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_3626.jpeg"
+    },
+    {
+      "id": "archive-IMG_3637",
+      "collection": "London",
+      "src": "./assets/photos/archive-IMG_3637.webp",
+      "caption": "London · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_3637.jpeg"
+    },
+    {
+      "id": "archive-IMG_4632",
+      "collection": "London",
+      "src": "./assets/photos/archive-IMG_4632.webp",
+      "caption": "London · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_4632.jpeg"
+    },
+    {
+      "id": "archive-IMG_6196",
+      "collection": "Santorini",
+      "src": "./assets/photos/archive-IMG_6196.webp",
+      "caption": "Santorini · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_6196.jpeg"
+    },
+    {
+      "id": "archive-IMG_6199",
+      "collection": "Santorini",
+      "src": "./assets/photos/archive-IMG_6199.webp",
+      "caption": "Santorini · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_6199.jpeg"
+    },
+    {
+      "id": "archive-IMG_6200",
+      "collection": "Santorini",
+      "src": "./assets/photos/archive-IMG_6200.webp",
+      "caption": "Santorini · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_6200.jpeg"
+    },
+    {
+      "id": "archive-IMG_6216",
+      "collection": "Santorini",
+      "src": "./assets/photos/archive-IMG_6216.webp",
+      "caption": "Santorini · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_6216.jpeg"
+    },
+    {
+      "id": "archive-IMG_6495",
+      "collection": "Barcelona",
+      "src": "./assets/photos/archive-IMG_6495.webp",
+      "caption": "Barcelona · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_6495.jpeg"
+    },
+    {
+      "id": "archive-IMG_6566",
+      "collection": "Barcelona",
+      "src": "./assets/photos/archive-IMG_6566.webp",
+      "caption": "Barcelona · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_6566.jpeg"
+    },
+    {
+      "id": "archive-IMG_6690",
+      "collection": "Barcelona",
+      "src": "./assets/photos/archive-IMG_6690.webp",
+      "caption": "Barcelona · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_6690.jpeg"
+    },
+    {
+      "id": "archive-IMG_6747",
+      "collection": "Barcelona",
+      "src": "./assets/photos/archive-IMG_6747.webp",
+      "caption": "Barcelona · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_6747.jpeg"
+    },
+    {
+      "id": "archive-IMG_6756",
+      "collection": "Barcelona",
+      "src": "./assets/photos/archive-IMG_6756.webp",
+      "caption": "Barcelona · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_6756.jpeg"
+    },
+    {
+      "id": "archive-IMG_7757",
+      "collection": "Istanbul",
+      "src": "./assets/photos/archive-IMG_7757.webp",
+      "caption": "Istanbul · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_7757.jpeg"
+    },
+    {
+      "id": "archive-IMG_7800",
+      "collection": "Istanbul",
+      "src": "./assets/photos/archive-IMG_7800.webp",
+      "caption": "Istanbul · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_7800.jpeg"
+    },
+    {
+      "id": "archive-IMG_7822",
+      "collection": "Istanbul",
+      "src": "./assets/photos/archive-IMG_7822.webp",
+      "caption": "Istanbul · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_7822.jpeg"
+    },
+    {
+      "id": "archive-IMG_7879",
+      "collection": "Istanbul",
+      "src": "./assets/photos/archive-IMG_7879.webp",
+      "caption": "Istanbul · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_7879.jpeg"
+    },
+    {
+      "id": "archive-IMG_7880",
+      "collection": "Istanbul",
+      "src": "./assets/photos/archive-IMG_7880.webp",
+      "caption": "Istanbul · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_7880.jpeg"
+    },
+    {
+      "id": "archive-IMG_8101",
+      "collection": "Sydney",
+      "src": "./assets/photos/archive-IMG_8101.webp",
+      "caption": "Sydney · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_8101.jpeg"
+    },
+    {
+      "id": "archive-IMG_8104",
+      "collection": "Sydney",
+      "src": "./assets/photos/archive-IMG_8104.webp",
+      "caption": "Sydney · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_8104.jpeg"
+    },
+    {
+      "id": "archive-IMG_8105",
+      "collection": "Sydney",
+      "src": "./assets/photos/archive-IMG_8105.webp",
+      "caption": "Sydney · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_8105.jpeg"
+    },
+    {
+      "id": "archive-IMG_8114",
+      "collection": "Sydney",
+      "src": "./assets/photos/archive-IMG_8114.webp",
+      "caption": "Sydney · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_8114.jpeg"
+    },
+    {
+      "id": "archive-IMG_8118",
+      "collection": "Sydney",
+      "src": "./assets/photos/archive-IMG_8118.webp",
+      "caption": "Sydney · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_8118.jpeg"
+    },
+    {
+      "id": "archive-IMG_8138",
+      "collection": "Sydney",
+      "src": "./assets/photos/archive-IMG_8138.webp",
+      "caption": "Sydney · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_8138.jpeg"
+    },
+    {
+      "id": "archive-IMG_8150",
+      "collection": "Sydney",
+      "src": "./assets/photos/archive-IMG_8150.webp",
+      "caption": "Sydney · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_8150.jpeg"
+    },
+    {
+      "id": "archive-IMG_8178",
+      "collection": "Sydney",
+      "src": "./assets/photos/archive-IMG_8178.webp",
+      "caption": "Sydney · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_8178.jpeg"
+    },
+    {
+      "id": "archive-IMG_8188",
+      "collection": "Sydney",
+      "src": "./assets/photos/archive-IMG_8188.webp",
+      "caption": "Sydney · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_8188.jpeg"
+    },
+    {
+      "id": "archive-IMG_8217",
+      "collection": "Beijing",
+      "src": "./assets/photos/archive-IMG_8217.webp",
+      "caption": "Beijing · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_8217.jpeg"
+    },
+    {
+      "id": "archive-IMG_8249",
+      "collection": "Beijing",
+      "src": "./assets/photos/archive-IMG_8249.webp",
+      "caption": "Beijing · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_8249.jpeg"
+    },
+    {
+      "id": "archive-IMG_8250",
+      "collection": "Beijing",
+      "src": "./assets/photos/archive-IMG_8250.webp",
+      "caption": "Beijing · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_8250.jpeg"
+    },
+    {
+      "id": "archive-IMG_9518",
+      "collection": "Tenerife",
+      "src": "./assets/photos/archive-IMG_9518.webp",
+      "caption": "Tenerife · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_9518.jpeg"
+    },
+    {
+      "id": "archive-IMG_9522",
+      "collection": "Tenerife",
+      "src": "./assets/photos/archive-IMG_9522.webp",
+      "caption": "Tenerife · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_9522.jpeg"
+    },
+    {
+      "id": "archive-IMG_9575",
+      "collection": "Paris",
+      "src": "./assets/photos/archive-IMG_9575.webp",
+      "caption": "Paris · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_9575.jpeg"
+    }
+  ]
+}

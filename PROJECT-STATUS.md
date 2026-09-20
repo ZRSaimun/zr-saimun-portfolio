@@ -75,3 +75,12 @@ The original git history is unchanged. A full pre-v4 working-file archive was cr
 ### Important boundaries
 - Use original assets and legally licensed/open map data; do not copy GTA, Asphalt 9, Google Maps or military helicopter assets.
 - Do not claim literal 4D/5D or live weather when the scene is cinematic simulation.
+
+### Version 4.0 continuation — 20 September 2026
+- Helicopter journey now has controllable bank, altitude and throttle, chase/orbit/cockpit cameras, pause, restart, keyboard/touch input, route telemetry, focus return and WebGL context recovery messaging.
+- Destination road world now swaps between procedural Britain, Dubai, Aegean, Nordic, Sydney, Beijing, Dhaka, Arabia, Istanbul and wider-European scene families.
+- Weather now uses live Open-Meteo wind speed/direction to influence particles when live mode is enabled; aurora and night presets add dedicated sky effects.
+- Graphics controls now expose Adaptive, Eco, Balanced and Full tiers. Adaptive mode reduces GPU load after sustained low frame rate; mobile starts conservatively.
+- Audio routes vehicle, ambience and effects through separate buses and gives active helicopter audio priority.
+- `PHOTO-REGISTRY.json` is generated from the upload manifest and enforces global source uniqueness; 61 uploaded photographs are registered and 71 destination gallery references remain valid.
+- Automated project validation and production build pass. Browser/live deployment QA remains required before describing this checkpoint as fully tested.
