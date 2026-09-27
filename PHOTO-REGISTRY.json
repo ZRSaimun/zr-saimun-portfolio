@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedFrom": "dist/photo-manifest.json",
-  "photoCount": 61,
+  "photoCount": 87,
   "collections": {
     "Türkiye": 1,
     "NTV": 1,
@@ -17,22 +17,15 @@
     "Beijing": 3,
     "Milan": 3,
     "Istanbul": 5,
-    "Barcelona": 5
+    "Barcelona": 5,
+    "Dhaka": 9,
+    "Stockholm": 7,
+    "Dublin": 5,
+    "Frankfurt": 2,
+    "Hamburg": 1,
+    "Munich": 2
   },
-  "duplicatesExcluded": [
-    {
-      "excluded": "IMG_0678(1).jpeg",
-      "canonical": "IMG_0678.jpeg"
-    },
-    {
-      "excluded": "IMG_1026(1).jpeg",
-      "canonical": "IMG_1026.jpeg"
-    },
-    {
-      "excluded": "IMG_0977(1).jpeg",
-      "canonical": "IMG_0977.jpeg"
-    }
-  ],
+  "duplicatesExcluded": [],
   "records": [
     {
       "id": "archive-F31B4B57-CF6D-4182-B036-C0D800889457",
@@ -73,6 +66,14 @@
       "caption": "Graduation day · London",
       "kind": "Personal photograph",
       "original": "FullSizeRender.jpeg"
+    },
+    {
+      "id": "archive-IMG_0358",
+      "collection": "Dhaka",
+      "src": "./assets/photos/archive-IMG_0358.webp",
+      "caption": "Dhaka · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_0358.jpeg"
     },
     {
       "id": "archive-IMG_0516",
@@ -163,12 +164,36 @@
       "original": "IMG_0762.jpeg"
     },
     {
+      "id": "archive-IMG_0785-2",
+      "collection": "Frankfurt",
+      "src": "./assets/photos/archive-IMG_0785-2.webp",
+      "caption": "Frankfurt · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_0785(2).jpeg"
+    },
+    {
       "id": "archive-IMG_0805",
       "collection": "Tromsø",
       "src": "./assets/photos/archive-IMG_0805.webp",
       "caption": "Tromsø · Personal travel archive",
       "kind": "Personal photograph",
       "original": "IMG_0805.jpeg"
+    },
+    {
+      "id": "archive-IMG_0822",
+      "collection": "Hamburg",
+      "src": "./assets/photos/archive-IMG_0822.webp",
+      "caption": "Hamburg · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_0822.jpeg"
+    },
+    {
+      "id": "archive-IMG_0864",
+      "collection": "Munich",
+      "src": "./assets/photos/archive-IMG_0864.webp",
+      "caption": "Munich · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_0864.jpeg"
     },
     {
       "id": "archive-IMG_0931",
@@ -257,6 +282,126 @@
       "caption": "Madinah · Personal travel archive",
       "kind": "Personal photograph",
       "original": "IMG_1817.jpeg"
+    },
+    {
+      "id": "archive-IMG_2078",
+      "collection": "Stockholm",
+      "src": "./assets/photos/archive-IMG_2078.webp",
+      "caption": "Stockholm · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_2078.jpeg"
+    },
+    {
+      "id": "archive-IMG_2119",
+      "collection": "Stockholm",
+      "src": "./assets/photos/archive-IMG_2119.webp",
+      "caption": "Stockholm · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_2119.jpeg"
+    },
+    {
+      "id": "archive-IMG_2120",
+      "collection": "Dublin",
+      "src": "./assets/photos/archive-IMG_2120.webp",
+      "caption": "Dublin · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_2120.jpeg"
+    },
+    {
+      "id": "archive-IMG_2122",
+      "collection": "Stockholm",
+      "src": "./assets/photos/archive-IMG_2122.webp",
+      "caption": "Stockholm · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_2122.jpeg"
+    },
+    {
+      "id": "archive-IMG_2134",
+      "collection": "Dublin",
+      "src": "./assets/photos/archive-IMG_2134.webp",
+      "caption": "Dublin · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_2134.jpeg"
+    },
+    {
+      "id": "archive-IMG_2143",
+      "collection": "Dublin",
+      "src": "./assets/photos/archive-IMG_2143.webp",
+      "caption": "Dublin · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_2143.jpeg"
+    },
+    {
+      "id": "archive-IMG_2148",
+      "collection": "Dublin",
+      "src": "./assets/photos/archive-IMG_2148.webp",
+      "caption": "Dublin · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_2148.jpeg"
+    },
+    {
+      "id": "archive-IMG_2150",
+      "collection": "Dublin",
+      "src": "./assets/photos/archive-IMG_2150.webp",
+      "caption": "Dublin · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_2150.jpeg"
+    },
+    {
+      "id": "archive-IMG_2162",
+      "collection": "Stockholm",
+      "src": "./assets/photos/archive-IMG_2162.webp",
+      "caption": "Stockholm · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_2162.jpeg"
+    },
+    {
+      "id": "archive-IMG_2188",
+      "collection": "Stockholm",
+      "src": "./assets/photos/archive-IMG_2188.webp",
+      "caption": "Stockholm · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_2188.jpeg"
+    },
+    {
+      "id": "archive-IMG_2204",
+      "collection": "Stockholm",
+      "src": "./assets/photos/archive-IMG_2204.webp",
+      "caption": "Stockholm · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_2204.jpeg"
+    },
+    {
+      "id": "archive-IMG_2238",
+      "collection": "Stockholm",
+      "src": "./assets/photos/archive-IMG_2238.webp",
+      "caption": "Stockholm · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_2238.jpeg"
+    },
+    {
+      "id": "archive-IMG_2384",
+      "collection": "Dhaka",
+      "src": "./assets/photos/archive-IMG_2384.webp",
+      "caption": "Dhaka · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_2384.jpeg"
+    },
+    {
+      "id": "archive-IMG_2388",
+      "collection": "Dhaka",
+      "src": "./assets/photos/archive-IMG_2388.webp",
+      "caption": "Dhaka · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_2388.jpeg"
+    },
+    {
+      "id": "archive-IMG_2755-1",
+      "collection": "Dhaka",
+      "src": "./assets/photos/archive-IMG_2755-1.webp",
+      "caption": "Dhaka · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_2755(1).jpeg"
     },
     {
       "id": "archive-IMG_3625",
@@ -361,6 +506,22 @@
       "caption": "Barcelona · Personal travel archive",
       "kind": "Personal photograph",
       "original": "IMG_6756.jpeg"
+    },
+    {
+      "id": "archive-IMG_7455",
+      "collection": "Dhaka",
+      "src": "./assets/photos/archive-IMG_7455.webp",
+      "caption": "Dhaka · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_7455.jpeg"
+    },
+    {
+      "id": "archive-IMG_7456",
+      "collection": "Dhaka",
+      "src": "./assets/photos/archive-IMG_7456.webp",
+      "caption": "Dhaka · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_7456.jpeg"
     },
     {
       "id": "archive-IMG_7757",
@@ -497,6 +658,46 @@
       "caption": "Beijing · Personal travel archive",
       "kind": "Personal photograph",
       "original": "IMG_8250.jpeg"
+    },
+    {
+      "id": "archive-IMG_8662",
+      "collection": "Munich",
+      "src": "./assets/photos/archive-IMG_8662.webp",
+      "caption": "Munich · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_8662.jpeg"
+    },
+    {
+      "id": "archive-IMG_8663",
+      "collection": "Frankfurt",
+      "src": "./assets/photos/archive-IMG_8663.webp",
+      "caption": "Frankfurt · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_8663.jpeg"
+    },
+    {
+      "id": "archive-IMG_8866",
+      "collection": "Dhaka",
+      "src": "./assets/photos/archive-IMG_8866.webp",
+      "caption": "Dhaka · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_8866.jpeg"
+    },
+    {
+      "id": "archive-IMG_9159",
+      "collection": "Dhaka",
+      "src": "./assets/photos/archive-IMG_9159.webp",
+      "caption": "Dhaka · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_9159.jpeg"
+    },
+    {
+      "id": "archive-IMG_9160",
+      "collection": "Dhaka",
+      "src": "./assets/photos/archive-IMG_9160.webp",
+      "caption": "Dhaka · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_9160.jpeg"
     },
     {
       "id": "archive-IMG_9518",
