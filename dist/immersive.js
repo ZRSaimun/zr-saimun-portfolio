@@ -74,9 +74,14 @@ function rendererFor(canvas,shadows=false) {
   renderer.setPixelRatio(Math.min(devicePixelRatio||1,innerWidth<760?1.35:1.8));
   renderer.outputColorSpace=THREE.SRGBColorSpace;
   renderer.toneMapping=THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure=1.25;
+  renderer.toneMappingExposure=1.18;
+  renderer.useLegacyLights=false;
+  renderer.physicallyCorrectLights=true;
   renderer.shadowMap.enabled=shadows&&innerWidth>760;
   renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+  canvas.dataset.renderer='webgl2';
+  canvas.addEventListener('webglcontextlost',event=>{event.preventDefault();canvas.closest('section,main')?.classList.add('webgl-paused');},{passive:false});
+  canvas.addEventListener('webglcontextrestored',()=>canvas.closest('section,main')?.classList.remove('webgl-paused'));
   return renderer;
 }
 
@@ -177,13 +182,15 @@ function onScreen(element) {const r=element.getBoundingClientRect();return r.bot
 
 function makeGlobe(parent,radius) {
   const group=new THREE.Group();parent.add(group);
-  const globe=mesh(new THREE.SphereGeometry(radius,64,48),material(0xbdd9db,{map:earthTexture,roughness:.7,metalness:.12,emissive:0x193747,emissiveIntensity:.4}),group);
+  const globe=mesh(new THREE.SphereGeometry(radius,96,64),material(0xbdd9db,{map:earthTexture,roughness:.62,metalness:.08,emissive:0x193747,emissiveIntensity:.32}),group);
   const atmosphere=mesh(new THREE.SphereGeometry(radius*1.035,48,32),new THREE.ShaderMaterial({
     transparent:true,side:THREE.BackSide,depthWrite:false,blending:THREE.AdditiveBlending,
     vertexShader:'varying vec3 vNormal; varying vec3 vPosition; void main(){vNormal=normalize(normalMatrix*normal); vec4 p=modelViewMatrix*vec4(position,1.);vPosition=p.xyz;gl_Position=projectionMatrix*p;}',
-    fragmentShader:'varying vec3 vNormal; varying vec3 vPosition; void main(){float rim=pow(1.-abs(dot(normalize(vNormal),normalize(-vPosition))),3.);gl_FragColor=vec4(.15,.65,.85,rim*.75);}'
+    fragmentShader:'varying vec3 vNormal; varying vec3 vPosition; void main(){float rim=pow(1.-abs(dot(normalize(vNormal),normalize(-vPosition))),3.);float night=smoothstep(-.15,.55,dot(normalize(vNormal),vec3(.2,.8,.45)));gl_FragColor=vec4(.12+.08*night,.55+.2*night,.82+night*.12,rim*.8);}'
   }),group);
+  const halo=mesh(new THREE.SphereGeometry(radius*1.075,32,20),new THREE.ShaderMaterial({transparent:true,side:THREE.BackSide,depthWrite:false,blending:THREE.AdditiveBlending,vertexShader:'varying vec3 vNormal; void main(){vNormal=normalize(normalMatrix*normal); gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',fragmentShader:'varying vec3 vNormal; void main(){float rim=pow(1.-abs(vNormal.z),4.);gl_FragColor=vec4(.18,.65,.95,rim*.22);}'}),group);
   globe.castShadow=false;atmosphere.castShadow=false;
+  halo.castShadow=false;
   return group;
 }
 
@@ -232,9 +239,9 @@ addEventListener('scroll',readExpedition,{passive:true});addEventListener('resiz
 
 function startExpedition(){
   const canvas=$('#expeditionCanvas'),renderer=rendererFor(canvas);
-  const scene=new THREE.Scene();scene.background=new THREE.Color(0x030912);
+  const scene=new THREE.Scene();scene.background=new THREE.Color(0x030912);scene.fog=new THREE.FogExp2(0x071523,.008);
   const camera=new THREE.PerspectiveCamera(43,1,.1,180);camera.position.set(0,2,20);
-  scene.add(new THREE.AmbientLight(0x84bdd7,2.2));const light=new THREE.DirectionalLight(0xe5f5ff,4);light.position.set(-9,8,14);scene.add(light);
+  scene.add(new THREE.HemisphereLight(0x9bd9ef,0x07111d,1.7));scene.add(new THREE.AmbientLight(0x84bdd7,.55));const light=new THREE.DirectionalLight(0xe5f5ff,3.2);light.position.set(-9,8,14);scene.add(light);
   const globe=makeGlobe(scene,5);globe.position.set(3,0,0);
   const stars=starfield(scene,850,75);
   const longitudeLines=new THREE.Group();globe.add(longitudeLines);
