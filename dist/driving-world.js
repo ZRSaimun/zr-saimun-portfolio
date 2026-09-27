@@ -8,7 +8,7 @@ const $=s=>document.querySelector(s),clamp=THREE.MathUtils.clamp,lerp=THREE.Math
 export function startPremiumWorld(){
  const canvas=$('#driveCanvas'),home=$('#home');
  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false,powerPreference:'high-performance'});
- renderer.setPixelRatio(Math.min(devicePixelRatio,innerWidth<760?1.5:2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;renderer.outputColorSpace=THREE.SRGBColorSpace;
+ renderer.setPixelRatio(Math.min(devicePixelRatio,innerWidth<760?1.35:1.8));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.useLegacyLights=false;renderer.physicallyCorrectLights=true;canvas.dataset.renderer='webgl2';
  const scene=new THREE.Scene(),sky=new THREE.Color(0x172d3b);scene.background=sky;scene.fog=new THREE.FogExp2(sky,.006);
  const camera=new THREE.PerspectiveCamera(48,1,.1,450);camera.position.set(48,66,92);
  const ambient=new THREE.HemisphereLight(0xc8e6ef,0x28352d,2.8);scene.add(ambient);const sun=new THREE.DirectionalLight(0xffe9c3,3);sun.position.set(-25,65,-35);sun.castShadow=true;sun.shadow.mapSize.set(1024,1024);Object.assign(sun.shadow.camera,{left:-65,right:65,top:65,bottom:-65,far:180});sun.shadow.normalBias=.08;scene.add(sun);
@@ -86,13 +86,14 @@ export function startPremiumWorld(){
  const minimap=document.createElement('canvas');minimap.id='destinationMinimap';minimap.width=180;minimap.height=180;minimap.setAttribute('role','img');minimap.setAttribute('aria-label','Destination world minimap');minimap.hidden=true;home.append(minimap);const mapCtx=minimap.getContext('2d');
  const inputs={up:false,down:false,left:false,right:false,boost:false,brake:false,climb:false,descend:false};let stickX=0,stickY=0,speed=0,heading=Math.PI/2,mode='tour',tourAngle=0,damage=0,shake=0,activeCity=destinations[0],nearest=-1,weather='rain',last=performance.now(),time=0,lastMix=0,lastImpact=-10,qualityTier='balanced',fpsStarted=performance.now(),fpsFrames=0,autoAdjusted=false,heliAltitude=4,destinationWorld=false;
  const destinationTheme=city=>{
-  if(/Tromsø|Tromso|Oslo|Stockholm/.test(city))return {sky:0x6e8798,ground:0xb9c8ca,trees:0x9bb4b2,road:0x56636b,exposure:.88};
-  if(/Dubai|Medina/.test(city))return {sky:0xc9a77a,ground:0xbf965e,trees:0x7a7253,road:0x5a4b3c,exposure:1.18};
-  if(/Santorini|Corfu|Athens|Tenerife|Sydney/.test(city))return {sky:0x6dacc2,ground:0x728d72,trees:0x3d6d61,road:0x364448,exposure:1.15};
-  if(/London|Paris|Madrid|Milan|Amsterdam|Geneva|Zürich|Zurich/.test(city))return {sky:0x6b8390,ground:0x627367,trees:0x405d50,road:0x273238,exposure:1.0};
-  return {sky:0x709eae,ground:0x627367,trees:0x385c4e,road:0x253238,exposure:1.0};
+  if(/Tromsø|Tromso|Oslo|Stockholm/.test(city))return {sky:0x6e8798,ground:0xb9c8ca,trees:0x9bb4b2,road:0x56636b,water:0x8fc5d0,sun:0xd9efff,exposure:.88,fog:.012};
+  if(/Dubai|Medina|Madinah|Makkah/.test(city))return {sky:0xc9a77a,ground:0xbf965e,trees:0x7a7253,road:0x5a4b3c,water:0x4d8c91,sun:0xffd3a0,exposure:1.18,fog:.005};
+  if(/Dhaka|Beijing|Istanbul/.test(city))return {sky:0x7895a3,ground:0x667b69,trees:0x3f685a,road:0x34464b,water:0x3e8a91,sun:0xffe0bc,exposure:1.04,fog:.009};
+  if(/Santorini|Corfu|Athens|Tenerife|Sydney/.test(city))return {sky:0x6dacc2,ground:0x728d72,trees:0x3d6d61,road:0x364448,water:0x3a9dab,sun:0xffe8c5,exposure:1.15,fog:.006};
+  if(/London|Paris|Madrid|Milan|Amsterdam|Geneva|Zürich|Zurich/.test(city))return {sky:0x6b8390,ground:0x627367,trees:0x405d50,road:0x273238,water:0x468991,sun:0xddeeff,exposure:1.0,fog:.009};
+  return {sky:0x709eae,ground:0x627367,trees:0x385c4e,road:0x253238,water:0x35898f,sun:0xe5f1df,exposure:1.0,fog:.007};
  };
- function applyDestinationTheme(){const theme=destinationTheme(activeCity.city);renderer.toneMappingExposure=theme.exposure;if(weather!=='snow'&&weather!=='desert'){sky.set(theme.sky);scene.fog.color.copy(sky);groundMat.color.set(theme.ground);treeMat.color.set(theme.trees);roadMat.color.set(theme.road);}$('#driveWeather').textContent=`${activeCity.city.toUpperCase()} / ${weather.toUpperCase()}`;}
+ function applyDestinationTheme(){const theme=destinationTheme(activeCity.city);renderer.toneMappingExposure=theme.exposure;sun.color.set(theme.sun);scene.fog.density=theme.fog;water.children.forEach((o,i)=>o.material.color.set(theme.water));if(weather!=='snow'&&weather!=='desert'){sky.set(theme.sky);scene.fog.color.copy(sky);groundMat.color.set(theme.ground);treeMat.color.set(theme.trees);roadMat.color.set(theme.road);}$('#driveWeather').textContent=`${activeCity.city.toUpperCase()} / ${weather.toUpperCase()}`;}
  const shards=[],shardGeometry=new THREE.BufferGeometry();shardGeometry.setAttribute('position',new THREE.Float32BufferAttribute([-.15,0,0,.15,0,0,0,.4,0],3));shardGeometry.computeVertexNormals();const shardMat=new THREE.MeshStandardMaterial({color:0xc8f0ef,metalness:.5,roughness:.1,side:THREE.DoubleSide,transparent:true,opacity:.8});
  const particleCount=innerWidth<760?500:1000,positions=new Float32Array(particleCount*3);for(let i=0;i<particleCount;i++){positions[i*3]=(Math.random()-.5)*130;positions[i*3+1]=Math.random()*45;positions[i*3+2]=(Math.random()-.5)*130;}
  const particleGeo=new THREE.BufferGeometry();particleGeo.setAttribute('position',new THREE.BufferAttribute(positions,3));const particleMat=new THREE.PointsMaterial({color:0xd9e7ef,size:.17,transparent:true,opacity:.75,depthWrite:false});const particles=new THREE.Points(particleGeo,particleMat);scene.add(particles);let liveWindSpeed=0,liveWindDirection=0;
