@@ -516,5 +516,225 @@
       "width": 1152,
       "height": 1536
     }
+  ],
+  "Dhaka": [
+    {
+      "src": "./assets/photos/archive-IMG_9160.webp",
+      "caption": "Dhaka · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_9160.jpeg",
+      "width": 1201,
+      "height": 1800
+    },
+    {
+      "src": "./assets/photos/archive-IMG_0358.webp",
+      "caption": "Dhaka · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_0358.jpeg",
+      "width": 1536,
+      "height": 1152
+    },
+    {
+      "src": "./assets/photos/archive-IMG_2755-1.webp",
+      "caption": "Dhaka · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_2755(1).jpeg",
+      "width": 864,
+      "height": 1536
+    },
+    {
+      "src": "./assets/photos/archive-IMG_2384.webp",
+      "caption": "Dhaka · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_2384.jpeg",
+      "width": 1024,
+      "height": 1536
+    },
+    {
+      "src": "./assets/photos/archive-IMG_2388.webp",
+      "caption": "Dhaka · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_2388.jpeg",
+      "width": 1024,
+      "height": 1536
+    },
+    {
+      "src": "./assets/photos/archive-IMG_9159.webp",
+      "caption": "Dhaka · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_9159.jpeg",
+      "width": 1200,
+      "height": 1800
+    },
+    {
+      "src": "./assets/photos/archive-IMG_8866.webp",
+      "caption": "Dhaka · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_8866.jpeg",
+      "width": 1152,
+      "height": 1536
+    },
+    {
+      "src": "./assets/photos/archive-IMG_7455.webp",
+      "caption": "Dhaka · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_7455.jpeg",
+      "width": 1200,
+      "height": 1800
+    },
+    {
+      "src": "./assets/photos/archive-IMG_7456.webp",
+      "caption": "Dhaka · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_7456.jpeg",
+      "width": 1275,
+      "height": 1700
+    }
+  ],
+  "Stockholm": [
+    {
+      "src": "./assets/photos/archive-IMG_2119.webp",
+      "caption": "Stockholm · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_2119.jpeg",
+      "width": 1152,
+      "height": 1536
+    },
+    {
+      "src": "./assets/photos/archive-IMG_2122.webp",
+      "caption": "Stockholm · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_2122.jpeg",
+      "width": 1536,
+      "height": 1152
+    },
+    {
+      "src": "./assets/photos/archive-IMG_2078.webp",
+      "caption": "Stockholm · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_2078.jpeg",
+      "width": 1152,
+      "height": 1536
+    },
+    {
+      "src": "./assets/photos/archive-IMG_2162.webp",
+      "caption": "Stockholm · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_2162.jpeg",
+      "width": 1152,
+      "height": 1536
+    },
+    {
+      "src": "./assets/photos/archive-IMG_2188.webp",
+      "caption": "Stockholm · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_2188.jpeg",
+      "width": 1152,
+      "height": 1536
+    },
+    {
+      "src": "./assets/photos/archive-IMG_2238.webp",
+      "caption": "Stockholm · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_2238.jpeg",
+      "width": 1350,
+      "height": 1800
+    },
+    {
+      "src": "./assets/photos/archive-IMG_2204.webp",
+      "caption": "Stockholm · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_2204.jpeg",
+      "width": 1152,
+      "height": 1536
+    }
+  ],
+  "Dublin": [
+    {
+      "src": "./assets/photos/archive-IMG_2120.webp",
+      "caption": "Dublin · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_2120.jpeg",
+      "width": 1536,
+      "height": 864
+    },
+    {
+      "src": "./assets/photos/archive-IMG_2134.webp",
+      "caption": "Dublin · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_2134.jpeg",
+      "width": 864,
+      "height": 1536
+    },
+    {
+      "src": "./assets/photos/archive-IMG_2150.webp",
+      "caption": "Dublin · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_2150.jpeg",
+      "width": 864,
+      "height": 1536
+    },
+    {
+      "src": "./assets/photos/archive-IMG_2148.webp",
+      "caption": "Dublin · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_2148.jpeg",
+      "width": 864,
+      "height": 1536
+    },
+    {
+      "src": "./assets/photos/archive-IMG_2143.webp",
+      "caption": "Dublin · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_2143.jpeg",
+      "width": 864,
+      "height": 1536
+    }
+  ],
+  "Frankfurt": [
+    {
+      "src": "./assets/photos/archive-IMG_0785-2.webp",
+      "caption": "Frankfurt · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_0785(2).jpeg",
+      "width": 1536,
+      "height": 1152
+    },
+    {
+      "src": "./assets/photos/archive-IMG_8663.webp",
+      "caption": "Frankfurt · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_8663.jpeg",
+      "width": 1280,
+      "height": 960
+    }
+  ],
+  "Hamburg": [
+    {
+      "src": "./assets/photos/archive-IMG_0822.webp",
+      "caption": "Hamburg · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_0822.jpeg",
+      "width": 1536,
+      "height": 1152
+    }
+  ],
+  "Munich": [
+    {
+      "src": "./assets/photos/archive-IMG_0864.webp",
+      "caption": "Munich · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_0864.jpeg",
+      "width": 1350,
+      "height": 1800
+    },
+    {
+      "src": "./assets/photos/archive-IMG_8662.webp",
+      "caption": "Munich · Personal travel archive",
+      "kind": "Personal photograph",
+      "original": "IMG_8662.jpeg",
+      "width": 896,
+      "height": 1152
+    }
   ]
 }
