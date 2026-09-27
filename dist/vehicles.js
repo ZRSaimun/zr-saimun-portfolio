@@ -21,9 +21,9 @@ export function makeCar(parent){
  const brakes=new THREE.MeshStandardMaterial({color:0xc82438,emissive:0xee1738,emissiveIntensity:.6});
  for(const x of [-.75,.75]){box(car,.34,.055,.07,lamps,x,.92,-2.14);box(car,.42,.045,.07,brakes,x,.91,2.25);box(car,.18,.04,.3,chrome,x*1.31,.63,.1);box(car,.21,.13,.3,paint,x*1.35,1.22,-.25);}
  for(const x of [-.995,.995]){box(car,.035,.04,2.2,chrome,x,.58,.08);box(car,.02,.04,.2,chrome,x,1.06,.35);box(car,.04,.25,.022,paint,x*.71,1.35,.51);}
- const wheels=[],front=[];
+ const wheels=[],front=[],suspension=[];
  for(const x of [-1,1])for(const z of [-1.42,1.48]){
-  const pivot=new THREE.Group();pivot.position.set(x,.48,z);car.add(pivot);if(z<0)front.push(pivot);
+  const pivot=new THREE.Group();pivot.position.set(x,.48,z);car.add(pivot);suspension.push({pivot,base:.48,phase:(x+z)*1.7});if(z<0)front.push(pivot);
   const wheel=new THREE.Group();pivot.add(wheel);wheels.push(wheel);
   const tyre=part(wheel,new THREE.CylinderGeometry(.47,.47,.34,32),rubber);tyre.rotation.z=Math.PI/2;
   const hub=part(wheel,new THREE.CylinderGeometry(.32,.32,.35,24),chrome);hub.rotation.z=Math.PI/2;
@@ -35,7 +35,7 @@ export function makeCar(parent){
  for(let i=0;i<9;i++){const s=box(damage,.016,.012,.27+(i%3)*.13,chrome,i%2?1.025:-1.025,.69+i*.022,-.45+i*.11);s.rotation.x=.25;}
  const dent=box(damage,.23,.14,.1,mat(0x172d29),.6,.79,-2.23);dent.rotation.z=.3;
  const beam=new THREE.SpotLight(0xe4f1ff,35,26,.55,.6,1.5);beam.position.set(0,1,-1.8);beam.target.position.set(0,0,-15);car.add(beam,beam.target);
- return {car,wheels,front,brakes,damage,paint};
+ return {car,wheels,front,suspension,brakes,damage,paint};
 }
 export function makePlane(parent,scale=.6){
  const plane=new THREE.Group();plane.scale.setScalar(scale);parent.add(plane);
