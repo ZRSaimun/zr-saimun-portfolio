@@ -269,6 +269,9 @@ function startExpedition(){
     const {index,local,chapter}=readExpedition();if(!paused)elapsed+=dt;
     targetQuaternion.setFromUnitVectors(geoPoints[index].clone().normalize(),zAxis);
     globe.quaternion.slerp(targetQuaternion,paused?1:1-Math.exp(-dt*4));
+    // Keep the Earth alive between chapter changes: a slow axial rotation makes
+    // the globe feel physical while the selected destination eases toward camera.
+    if(!paused)globe.rotateY(dt*.075);
     const mobile=innerWidth<760;
     const zoom=paused?0:THREE.MathUtils.smoothstep(local,0,.6);
     camera.position.lerp(new THREE.Vector3(mobile?1:0,mobile?2:1,lerp(mobile?23:20,10,zoom)),1-Math.exp(-dt*4));
