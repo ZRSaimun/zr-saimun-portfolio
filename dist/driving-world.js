@@ -65,6 +65,25 @@ export function startPremiumWorld(){
  const orbit=add(new THREE.TorusGeometry(13,.055,6,100),gold,0,15,0);orbit.rotation.x=1.1;
  const aircraft=makePlane(scene,1.3);
  const rig=makeCar(scene);rig.car.position.set(0,.06,57.5);
+ // Lightweight ambient traffic: original geometry keeps the road lively without
+ // loading external branded assets. Density automatically adapts to smaller screens.
+ const traffic=[];
+ function makeBus(){
+  const g=new THREE.Group(),red=material(0xb52b32,.48,.12),dark=material(0x17262b,.25,.2),glass=material(0x9bc4cd,.12,.2);
+  add(new THREE.BoxGeometry(2.5,2.5,7.8),red,0,1.55,0,g); add(new THREE.BoxGeometry(2.42,1.25,7.65),red,0,3.35,0,g);
+  for(const y of [1.65,3.45]) for(const z of [-2.4,0,2.4]) add(new THREE.BoxGeometry(2.02,.48,1.45),glass,0,y,z,g);
+  add(new THREE.BoxGeometry(2.52,.18,7.9),dark,0,.38,0,g);
+  for(const x of [-.92,.92]) for(const z of [-2.55,2.55]) add(new THREE.CylinderGeometry(.36,.36,.18,16),dark,x,.35,z,g).rotation.z=Math.PI/2;
+  const lamps=new THREE.MeshStandardMaterial({color:0xffd28a,emissive:0xff9e55,emissiveIntensity:2});add(new THREE.BoxGeometry(.5,.22,.08),lamps,0,1.2,-3.94,g);
+  g.scale.setScalar(.72);scene.add(g);return g;
+ }
+ const trafficCount=innerWidth<760?4:9;
+ for(let i=0;i<trafficCount;i++){
+  const bus=i%4===0, vehicle=bus?makeBus():makeCar(scene);
+  if(!bus){vehicle.car.scale.setScalar(.72);vehicle.paint?.color.setHex([0x9b1f2f,0x3a6ea5,0xd7c58f,0x161d22,0x7a8fc4][i%5]);}
+  const radius=56.6+(i%3)*2.1, angle=(i/trafficCount)*Math.PI*2+.7;
+  traffic.push({group:bus?vehicle:vehicle.car,radius,angle,speed:.7+(i%4)*.18,offset:i%2?1:-1,bus});
+ }
  const localFlight=makeHelicopter(scene,.9);localFlight.heli.position.set(5,4,54);localFlight.heli.visible=false;
  const loader=new THREE.TextureLoader();const gates=[];
  function plaque(d){const c=document.createElement('canvas');c.width=512;c.height=192;const ctx=c.getContext('2d');ctx.fillStyle='#10242b';ctx.fillRect(0,0,512,192);ctx.fillStyle='#e5cc94';ctx.font='500 46px sans-serif';ctx.fillText(d.city,24,81);ctx.fillStyle='#d3e3e3';ctx.font='23px sans-serif';ctx.fillText(d.country,24,126);const tx=new THREE.CanvasTexture(c);tx.colorSpace=THREE.SRGBColorSpace;return tx;}
@@ -151,6 +170,8 @@ export function startPremiumWorld(){
    if(mode==='tour'){tourAngle+=dt*.025;rig.car.position.set(Math.sin(tourAngle)*57.5,.06,Math.cos(tourAngle)*57.5);heading=tourAngle-Math.PI/2;speed=3;}else if(mode==='helicopter'){speed+=throttle*8*dt;speed*=Math.pow(throttle?.986:.94,dt*60);speed=clamp(speed,-6,inputs.boost?20:13);heading+=steer*dt*1.25;heliAltitude=clamp(heliAltitude+((inputs.climb?1:0)-(inputs.descend?1:0))*dt*8,2.8,28);localFlight.heli.position.x-=Math.sin(heading)*speed*dt;localFlight.heli.position.z-=Math.cos(heading)*speed*dt;const r=Math.hypot(localFlight.heli.position.x,localFlight.heli.position.z);if(r>94){localFlight.heli.position.x*=94/r;localFlight.heli.position.z*=94/r;speed*=.3;}localFlight.heli.position.y=THREE.MathUtils.damp(localFlight.heli.position.y,heliAltitude,4,dt);localFlight.heli.rotation.set(-clamp(speed*.018,-.18,.22),heading,-steer*.22);localFlight.rotor.rotation.y+=dt*(30+Math.abs(speed));localFlight.tailRotor.rotation.z+=dt*(24+Math.abs(speed));}else{const friction=weather==='snow'?.994:.985;speed+=throttle*11*dt;speed*=Math.pow(inputs.brake?.8:throttle?friction:.96,dt*60);speed=clamp(speed,-8,inputs.boost?25:16);heading+=steer*dt*1.15*clamp(Math.abs(speed)/5,0,1)*Math.sign(speed||1);rig.car.position.x-=Math.sin(heading)*speed*dt;rig.car.position.z-=Math.cos(heading)*speed*dt;const r=Math.hypot(rig.car.position.x,rig.car.position.z);if(r>94||r<14){const bound=r>94?94:14;rig.car.position.x*=bound/Math.max(r,.1);rig.car.position.z*=bound/Math.max(r,.1);impact(Math.abs(speed));speed*=-.3;}}
    const roadBump=(weather==='snow'?.035:weather==='rain'?.018:.012)*Math.abs(speed);rig.suspension?.forEach((s,index)=>{const targetY=s.base+Math.sin(time*9+s.phase)*roadBump; s.pivot.position.y=lerp(s.pivot.position.y,targetY,dt*10);});const bodyBounce=Math.sin(time*9)*roadBump*.22;rig.car.rotation.set(bodyBounce+Math.sin(time*12)*Math.abs(speed)*.0006,heading,-steer*Math.abs(speed)*.003);rig.wheels.forEach(w=>w.rotation.x-=speed*dt/.47);rig.front.forEach(w=>w.rotation.y=lerp(w.rotation.y,steer*.33,dt*6));rig.brakes.emissiveIntensity=inputs.brake||inputs.down?4:.6;
    const vehiclePosition=mode==='helicopter'?localFlight.heli.position:rig.car.position;let near=-1,min=15;gates.forEach((g,i)=>{const planar=Math.hypot(vehiclePosition.x-g.group.position.x,vehiclePosition.z-g.group.position.z);const active=planar<8;g.portalGlow.rotation.z+=dt*(active?1.7:.35);g.portalGlow.material.opacity=active?.5:.18;g.portalLight.intensity=active?1.1:.25;if(planar<min){min=planar;near=i;}if(mode==='drive'&&!g.broken&&!g.d.sacred&&planar<2.7&&Math.abs(speed)>2){impact(Math.abs(speed));shatter(g);speed*=.45;}});
+   // Traffic circulates on the arrival boulevard; it is cosmetic and never blocks the player.
+   traffic.forEach(v=>{const active=mode!=='helicopter';v.group.visible=active;if(!active)return;v.angle+=dt*v.speed*v.offset/v.radius;v.group.position.set(Math.sin(v.angle)*v.radius,v.bus?0:.06,Math.cos(v.angle)*v.radius);v.group.rotation.y=v.angle+(v.offset>0?Math.PI/2:-Math.PI/2);if(!v.bus){v.group.wheels?.forEach(w=>w.rotation.x-=dt*v.speed*2);v.group.brakes&&(v.group.brakes.emissiveIntensity=.55);}});
    if(near!==nearest){nearest=near;if(near>=0){activeCity=gates[near].d;$('#driveDestination').value=String(near);showDestinationScene(activeCity.city);studioWeather();announceDestination(activeCity.city);$('#driveChapter').textContent=activeCity.country.toUpperCase();$('#drivePlace').textContent=activeCity.city;$('#enterChapter').hidden=false;}else{$('#driveChapter').textContent='THE OPEN ROAD';$('#drivePlace').textContent='Follow your curiosity.';$('#enterChapter').hidden=true;}}
    for(let i=shards.length-1;i>=0;i--){const s=shards[i];s.life-=dt;s.v.y-=9.8*dt;s.mesh.position.addScaledVector(s.v,dt);s.mesh.rotation.x+=dt*3;s.mesh.rotation.z+=dt*2;if(s.mesh.position.y<.1){s.mesh.position.y=.1;s.v.y=Math.abs(s.v.y)*.25;s.v.x*=.94;s.v.z*=.94;}if(s.life<=0){scene.remove(s.mesh);shards.splice(i,1);}}
    const wind=Math.min(12,liveWindSpeed*.08),windX=Math.sin(liveWindDirection)*wind,windZ=Math.cos(liveWindDirection)*wind;for(let i=0;i<particleCount;i++){const n=i*3,depth=(i%3+1)/3;positions[n]+=dt*((weather==='snow'?1.5:weather==='desert'?7:.5)+windX)*depth;positions[n+2]+=dt*windZ*depth;positions[n+1]-=dt*(weather==='rain'?30:weather==='snow'?2+depth*2:.5);if(positions[n+1]<0)positions[n+1]=45;if(Math.abs(positions[n])>65)positions[n]*=-.95;if(Math.abs(positions[n+2])>65)positions[n+2]*=-.95;}particleGeo.attributes.position.needsUpdate=true;particles.position.set(rig.car.position.x,0,rig.car.position.z);particles.visible=['snow','rain','desert'].includes(weather);
