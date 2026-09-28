@@ -22,6 +22,7 @@ const rows = [
  ['Munich','Germany',48.135,11.582,'rain','A chapter in the supplied professional-event archive.'],
  ['Anacapri','Italy',40.552,14.212,'coast','An island setting in the supplied event archive.'],
  ['Amsterdam','Netherlands',52.368,4.904,'rain','Canal-side memories and a city explored on foot.'],
+ ['Dublin','Ireland',53.35,-6.26,'rain','Dublin memories: city streets, river light and a personal Irish chapter.'],
  ['Istanbul','Türkiye',41.008,28.978,'warm','A personal journey between two continents.'],
  ['Beijing','China',39.904,116.407,'warm','Great Wall memories and a journey through Beijing.'],
  ['Sydney','Australia',-33.869,151.209,'coast','Harbour light and memories from Australia.'],
