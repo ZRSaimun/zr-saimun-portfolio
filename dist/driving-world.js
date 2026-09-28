@@ -77,7 +77,7 @@ export function startPremiumWorld(){
   add(new THREE.BoxGeometry(2.52,.18,7.9),dark,0,.38,0,g);
   for(const x of [-.92,.92]) for(const z of [-2.55,2.55]) add(new THREE.CylinderGeometry(.36,.36,.18,16),dark,x,.35,z,g).rotation.z=Math.PI/2;
   const lamps=new THREE.MeshStandardMaterial({color:0xffd28a,emissive:0xff9e55,emissiveIntensity:2});add(new THREE.BoxGeometry(.5,.22,.08),lamps,0,1.2,-3.94,g);
-  const signCanvas=document.createElement('canvas');signCanvas.width=256;signCanvas.height=48;const signCtx=signCanvas.getContext('2d');signCtx.fillStyle='#17262b';signCtx.fillRect(0,0,256,48);signCtx.fillStyle='#ffd36d';signCtx.font='700 25px sans-serif';signCtx.textAlign='center';signCtx.fillText('LONDON · CITY ROUTE',128,32);const signTexture=new THREE.CanvasTexture(signCanvas);const sign=add(new THREE.PlaneGeometry(1.8,.34),new THREE.MeshBasicMaterial({map:signTexture,transparent:true}),0,2.45,-3.95,g);sign.rotation.y=Math.PI;
+  const signCanvas=document.createElement('canvas');signCanvas.width=360;signCanvas.height=72;const signCtx=signCanvas.getContext('2d');signCtx.fillStyle='#111b20';signCtx.fillRect(0,0,360,72);signCtx.fillStyle='#ffd36d';signCtx.font='700 30px sans-serif';signCtx.textAlign='center';signCtx.fillText('TfL  ·  14  ·  CHELSEA',180,47);const signTexture=new THREE.CanvasTexture(signCanvas);const sign=add(new THREE.PlaneGeometry(2.15,.43),new THREE.MeshBasicMaterial({map:signTexture,transparent:true}),0,2.45,-3.95,g);sign.rotation.y=Math.PI;
   g.scale.setScalar(.72);scene.add(g);return g;
  }
  const trafficCount=innerWidth<760?4:9;
