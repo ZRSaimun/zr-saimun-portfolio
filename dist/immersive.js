@@ -7,7 +7,7 @@ const $$ = (s) => [...document.querySelectorAll(s)];
 const clamp = THREE.MathUtils.clamp;
 const lerp = THREE.MathUtils.lerp;
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-let paused = reduced;
+let paused = false;
 window.zrMotionPaused = paused;
 document.body.classList.toggle('is-motion-paused', paused);
 const motionButton = $('#motionToggle');
@@ -247,7 +247,7 @@ function startExpedition(){
   const projectorBase=mesh(new THREE.CylinderGeometry(2.4,2.8,.45,48),new THREE.MeshStandardMaterial({color:0x2b3d46,metalness:.7,roughness:.3}),projector,0,0,0);
   const projectorRing=mesh(new THREE.TorusGeometry(2.1,.08,8,64),new THREE.MeshBasicMaterial({color:0x75eaff,transparent:true,opacity:.9}),projector,0,.28,0);projectorRing.rotation.x=Math.PI/2;
   const projectorBeam=mesh(new THREE.ConeGeometry(1.85,6.2,48,1,true),new THREE.MeshBasicMaterial({color:0x63e9ff,transparent:true,opacity:.14,depthWrite:false,side:THREE.DoubleSide}),projector,0,3.1,0);
-  const projectorCard=mesh(new THREE.PlaneGeometry(4.5,2.8),new THREE.MeshBasicMaterial({color:0xd9f7ff,transparent:true,opacity:0,side:THREE.DoubleSide,depthWrite:false}),projector,0,6.6,0);projectorCard.rotation.x=-.08;
+  const projectorCard=mesh(new THREE.PlaneGeometry(4.5,2.8),new THREE.MeshBasicMaterial({color:0x62c9e8,transparent:true,opacity:0,side:THREE.DoubleSide,depthWrite:false,blending:THREE.AdditiveBlending}),projector,0,6.6,0);projectorCard.rotation.x=-.08;
   const projectorLabel=label('LONDON','CURRENT CHAPTER',5.2);projectorLabel.position.set(0,4.75,.2);projector.add(projectorLabel);
   let projectedIndex=-1,projectedTexture=null;
   const stars=starfield(scene,850,75);
@@ -275,12 +275,12 @@ function startExpedition(){
     if(paused&&now-lastRender<140)return;lastRender=now;fit(renderer,camera,canvas);
     const {index,local,chapter}=readExpedition();if(!paused)elapsed+=dt;
     if(index!==projectedIndex){projectedIndex=index;projectedTexture=textureLoader.load('./assets/photos/'+chapter.photo);projectedTexture.colorSpace=THREE.SRGBColorSpace;projectorCard.material.map=projectedTexture;projectorCard.material.needsUpdate=true;projectorLabel.material.map=label(chapter.city,chapter.country.toUpperCase(),5.2).material.map;projectorLabel.material.needsUpdate=true;projectorCard.material.opacity=0;}
-    if(!paused){projector.rotation.y+=dt*.18;projectorRing.rotation.z+=dt*.7;projectorCard.material.opacity=THREE.MathUtils.damp(projectorCard.material.opacity,.82,4,dt);projectorCard.scale.setScalar(.96+Math.sin(elapsed*2.4)*.025);projectorBeam.material.opacity=.11+Math.sin(elapsed*2.2)*.025;}
+    if(!paused){projector.rotation.y+=dt*(reduced?.06:.18);projectorRing.rotation.z+=dt*(reduced?.25:.7);projectorCard.material.opacity=THREE.MathUtils.damp(projectorCard.material.opacity,.82,4,dt);projectorCard.scale.setScalar(.96+Math.sin(elapsed*2.4)*.025);projectorBeam.material.opacity=.11+Math.sin(elapsed*2.2)*.025;}
     targetQuaternion.setFromUnitVectors(geoPoints[index].clone().normalize(),zAxis);
     globe.quaternion.slerp(targetQuaternion,paused?1:1-Math.exp(-dt*4));
     // Keep the Earth alive between chapter changes: a slow axial rotation makes
     // the globe feel physical while the selected destination eases toward camera.
-    if(!paused)globe.rotateY(dt*.075);
+    if(!paused)globe.rotateY(dt*(reduced?.028:.075));
     const mobile=innerWidth<760;
     const zoom=paused?0:THREE.MathUtils.smoothstep(local,0,.6);
     camera.position.lerp(new THREE.Vector3(mobile?1:0,mobile?2:1,lerp(mobile?23:20,10,zoom)),1-Math.exp(-dt*4));
