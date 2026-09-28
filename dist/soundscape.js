@@ -1,5 +1,5 @@
 /* Local, licensed sound effects. No audio is fetched or played until a visitor enables it. */
-const FILES = ['engine-idle','engine-drive','engine-boost','soft-brake','collision','glass-break','photo-discover','city-arrival','snow-wind','rain-weather','hot-desert','coastal-ambience','jet-flyby','ui-open','ui-close','repair','snow-step'];
+const FILES = ['engine-idle','engine-drive','engine-boost','soft-brake','collision','glass-break','photo-discover','city-arrival','snow-wind','rain-weather','hot-desert','coastal-ambience','jet-flyby','ui-open','ui-close','ui-click','portal-whoosh','repair','snow-step'];
 const LOOPS = FILES.filter(n => ['engine-idle','engine-drive','snow-wind','rain-weather','hot-desert','coastal-ambience'].includes(n));
 const clamp = (v,a,b) => Math.max(a,Math.min(b,v));
 export const destinationWeather = city => /Tromsø|Tromso|Oslo|Stockholm|Mongolia/i.test(city) ? 'snow' : /Dubai|Medina|Madinah|Makkah|Saudi/i.test(city) ? 'desert' : /Dhaka|Bangladesh|Beijing|Madrid|Istanbul|Athens|Milan/i.test(city) ? 'warm' : /Santorini|Corfu|Sydney|Tenerife|Barcelona/i.test(city) ? 'coast' : 'rain';
@@ -21,6 +21,11 @@ class JourneyAudio {
     window.addEventListener('zr:motion',()=>this.mix());
   }
   bindControls() {
+    document.querySelectorAll('button,a').forEach(control=>{
+      if(control.dataset.uiSoundBound)return;
+      control.dataset.uiSoundBound='true';
+      control.addEventListener('click',()=>this.play('ui-click',.16));
+    });
     document.querySelectorAll('#soundToggle,[data-sound-toggle]').forEach(button=>{
       if(button.dataset.soundBound)return;
       button.dataset.soundBound='true';button.addEventListener('click',()=>this.toggle());
