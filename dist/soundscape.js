@@ -1,5 +1,6 @@
 /* Local, licensed sound effects. No audio is fetched or played until a visitor enables it. */
-const FILES = ['engine-idle','engine-drive','engine-boost','soft-brake','collision','glass-break','photo-discover','city-arrival','snow-wind','rain-weather','hot-desert','coastal-ambience','jet-flyby','ui-open','ui-close','ui-click','portal-whoosh','sky-warriors','gta-west-coast','game-of-thrones','repair','snow-step'];
+const FILES = ['engine-idle','engine-drive','engine-boost','soft-brake','collision','glass-break','photo-discover','city-arrival','snow-wind','rain-weather','hot-desert','coastal-ambience','jet-flyby','ui-open','ui-close','ui-click','portal-whoosh','repair','snow-step'];
+const MUSIC = [['sky-warriors','Sky Warriors'],['gta-west-coast','GTA West Coast'],['game-of-thrones','Game of Thrones']];
 const LOOPS = FILES.filter(n => ['engine-idle','engine-drive','snow-wind','rain-weather','hot-desert','coastal-ambience'].includes(n));
 const clamp = (v,a,b) => Math.max(a,Math.min(b,v));
 export const destinationWeather = city => /Tromsø|Tromso|Oslo|Stockholm|Mongolia/i.test(city) ? 'snow' : /Dubai|Medina|Madinah|Makkah|Saudi/i.test(city) ? 'desert' : /Dhaka|Bangladesh|Beijing|Madrid|Istanbul|Athens|Milan/i.test(city) ? 'warm' : /Santorini|Corfu|Sydney|Tenerife|Barcelona/i.test(city) ? 'coast' : 'rain';
@@ -11,7 +12,8 @@ class JourneyAudio {
     this.buffers=new Map(); this.loops=new Map(); this.vehicles=new Map(); this.cooldowns=new Map(); this.voices=new Set();
     this.context=null; this.master=null; this.vehicleBus=null; this.ambienceBus=null; this.effectsBus=null; this.error=''; this.request=0;
     try { this.volume=clamp(Number(localStorage.getItem('zr-volume') || .65),0,1); } catch {}
-    this.previousSpeed=0; this.previousBoost=false;
+    this.previousSpeed=0; this.previousBoost=false; this.music=null; this.musicName='sky-warriors'; this.musicEnabled=false;
+    try { this.musicName=localStorage.getItem('zr-music-track')||'sky-warriors'; } catch {}
     this.bindControls();
     document.addEventListener('visibilitychange',()=>this.visibility());
     window.addEventListener('pagehide',()=>{if(this.context)this.context.suspend().catch(()=>{});});
@@ -34,6 +36,13 @@ class JourneyAudio {
       input.value=Math.round(this.volume*100);
       input.addEventListener('input',()=>{this.volume=Number(input.value)/100;try{localStorage.setItem('zr-volume',this.volume);}catch{}this.mix();});
     });
+    if(!document.querySelector('[data-music-panel]')){
+      const panel=document.createElement('section'); panel.dataset.musicPanel='true'; panel.className='music-panel';
+      panel.innerHTML='<label>Music <select data-music-track aria-label="Choose background music"></select></label><button type="button" data-music-toggle>Play music</button>';
+      MUSIC.forEach(([id,label])=>{const o=document.createElement('option');o.value=id;o.textContent=label;panel.querySelector('select').append(o);});
+      panel.querySelector('select').value=this.musicName; panel.querySelector('select').addEventListener('change',e=>this.setMusic(e.target.value));
+      panel.querySelector('[data-music-toggle]').addEventListener('click',()=>this.toggleMusic()); document.body.append(panel);
+    }
     this.render();
   }
   render() {
@@ -111,6 +120,9 @@ class JourneyAudio {
       this.enabled=false;this.loading=false;this.error=error.message||'Audio could not start. Tap Retry sound.';this.mix();this.render();
     }
   }
+  setMusic(name){if(!MUSIC.some(([id])=>id===name))return;this.musicName=name;try{localStorage.setItem('zr-music-track',name);}catch{}if(this.music){this.music.pause();this.music=null;}if(this.musicEnabled)this.startMusic();}
+  startMusic(){if(!this.enabled)return;if(!this.music){this.music=new Audio(`${import.meta.env.BASE_URL}assets/audio/${this.musicName}.mp3`);this.music.loop=true;this.music.volume=this.volume*.28;}this.music.play().catch(()=>{});this.musicEnabled=true;const b=document.querySelector('[data-music-toggle]');if(b)b.textContent='Pause music';}
+  toggleMusic(){if(!this.enabled){this.toggle();return;}if(this.musicEnabled){this.music?.pause();this.musicEnabled=false;const b=document.querySelector('[data-music-toggle]');if(b)b.textContent='Play music';}else this.startMusic();}
   visibility() {
     if(!this.context)return;
     if(document.hidden){this.mix();this.context.suspend().catch(()=>{});}
