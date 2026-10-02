@@ -279,15 +279,19 @@ function startExpedition(){
   });
   const aircraft=makePlane(flightGroup,.25);
   const targetQuaternion=new THREE.Quaternion();const zAxis=new THREE.Vector3(0,0,1),zero=new THREE.Vector3();
-  let last=performance.now(),elapsed=0,lastRender=0;
+  let last=performance.now(),elapsed=0,lastRender=0,autoIndex=0;
   function animate(now){
     requestAnimationFrame(animate);const dt=Math.min(.04,(now-last)/1000);last=now;
     if(!onScreen(canvas))return;
     if(paused&&now-lastRender<140)return;lastRender=now;fit(renderer,camera,canvas);
     const {index,local,chapter}=readExpedition();if(!paused)elapsed+=dt;
-    if(index!==projectedIndex){projectedIndex=index;projectedTexture=textureLoader.load('./assets/photos/'+chapter.photo);projectedTexture.colorSpace=THREE.SRGBColorSpace;projectorCard.material.map=projectedTexture;projectorCard.material.needsUpdate=true;projectorLabel.material.map=label(chapter.city,chapter.country.toUpperCase(),5.2).material.map;projectorLabel.material.needsUpdate=true;projectorCard.material.opacity=0;}
+    // Autonomous gallery mode: the globe keeps rotating and presents one small holographic memory at a time. Scrolling remains a manual override.
+    autoIndex=Math.floor(elapsed/6.5)%chapters.length;
+    const liveIndex=paused?index:autoIndex;
+    const liveChapter=chapters[liveIndex];
+    if(liveIndex!==projectedIndex){projectedIndex=liveIndex;projectedTexture=textureLoader.load('./assets/photos/'+liveChapter.photo);projectedTexture.colorSpace=THREE.SRGBColorSpace;projectorCard.material.map=projectedTexture;projectorCard.material.needsUpdate=true;projectorLabel.material.map=label(liveChapter.city,liveChapter.country.toUpperCase(),5.2).material.map;projectorLabel.material.needsUpdate=true;projectorCard.material.opacity=0;projectorCard.scale.setScalar(.72);}
     if(!paused){projector.rotation.y+=dt*(reduced?.06:.18);projectorRing.rotation.z+=dt*(reduced?.25:.7);projectorCard.material.opacity=THREE.MathUtils.damp(projectorCard.material.opacity,.82,4,dt);projectorCard.scale.setScalar(.96+Math.sin(elapsed*2.4)*.025);projectorBeam.material.opacity=.11+Math.sin(elapsed*2.2)*.025;}
-    targetQuaternion.setFromUnitVectors(geoPoints[index].clone().normalize(),zAxis);
+    targetQuaternion.setFromUnitVectors(geoPoints[liveIndex].clone().normalize(),zAxis);
     globe.quaternion.slerp(targetQuaternion,paused?1:1-Math.exp(-dt*4));
     // Keep the Earth alive between chapter changes: a slow axial rotation makes
     // the globe feel physical while the selected destination eases toward camera.
@@ -297,8 +301,8 @@ function startExpedition(){
     camera.position.lerp(new THREE.Vector3(mobile?1:0,mobile?2:1,lerp(mobile?23:20,10,zoom)),1-Math.exp(-dt*4));
     camera.lookAt(mobile?new THREE.Vector3(2,-.5,0):new THREE.Vector3(1.5,0,0));
     stars.rotation.y=elapsed*.008;
-    const path=routes[index],t=paused?.5:(elapsed*.12)%1;aircraft.position.copy(path.getPoint(t));aircraft.lookAt(path.getPoint(Math.min(.999,t+.01)));aircraft.rotateY(Math.PI);
-    light.color.lerp(new THREE.Color(chapter.color),dt*3);
+    const path=routes[liveIndex],t=paused?.5:(elapsed*.12)%1;aircraft.position.copy(path.getPoint(t));aircraft.lookAt(path.getPoint(Math.min(.999,t+.01)));aircraft.rotateY(Math.PI);
+    light.color.lerp(new THREE.Color(liveChapter.color),dt*3);
     renderer.render(scene,camera);
   }
   requestAnimationFrame(animate);
