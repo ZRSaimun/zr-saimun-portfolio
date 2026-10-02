@@ -35,7 +35,7 @@
 .expedition{position:relative;height:600svh;background:#030912}
 .expedition-stage{position:sticky;top:0;height:100svh;overflow:hidden;isolation:isolate;background:#030912}
 #expeditionCanvas{position:absolute;inset:0;width:100%;height:100%}
-#expeditionCanvas{filter:saturate(1.08) contrast(1.04)}.expedition-orbit{position:absolute;inset:0;z-index:2;pointer-events:none;animation:orbitDrift 18s ease-in-out infinite alternate}
+#expeditionCanvas{filter:saturate(1.08) contrast(1.04)}.expedition-orbit{display:none}
 .orbit-destination{position:absolute;pointer-events:auto;display:grid;grid-template-columns:auto 1fr;column-gap:.55rem;align-items:center;min-width:145px;padding:.55rem .7rem;border:1px solid #73c9dd55;border-radius:2px;background:linear-gradient(110deg,#061724d9,#0a1824a8);color:#dcecf0;text-align:left;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 0 24px #3cbed51a;transition:transform .35s ease,border-color .35s ease,background .35s ease,box-shadow .35s ease}
 .orbit-destination:nth-child(1){left:57%;top:25%}.orbit-destination:nth-child(2){left:78%;top:43%}.orbit-destination:nth-child(3){left:63%;top:70%}.orbit-destination:nth-child(4){left:35%;top:72%}.orbit-destination:nth-child(5){left:28%;top:35%}
 .orbit-destination span{grid-row:span 2;color:#e8ca86;font:11px ui-monospace,monospace;letter-spacing:.12em}.orbit-destination b{font:500 13px ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase}.orbit-destination small{color:#9fc2ce;font-size:10px;letter-spacing:.08em}.orbit-destination::before{content:'';position:absolute;left:-20px;width:16px;border-top:1px solid #72d8e977}.orbit-destination.is-active{transform:scale(1.08);border-color:#8ae9f5;background:#0c3446dc;box-shadow:0 0 30px #57e5ff55}
