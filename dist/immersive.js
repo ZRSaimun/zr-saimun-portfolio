@@ -205,6 +205,16 @@ const chapters=[
 ];
 const expedition=$('#expedition'),expeditionPhoto=$('#expeditionPhoto'),expeditionImage=$('#expeditionImage');
 const titles=$('.expedition-titles'),chapterNav=$('#expeditionNavigation');
+const orbit=$('#expeditionOrbit');
+const orbitLabels=[];
+chapters.forEach((chapter,index)=>{
+  const node=document.createElement('button'); node.type='button'; node.className='orbit-destination';
+  node.innerHTML='<span>'+String(index+1).padStart(2,'0')+'</span><b>'+chapter.city+'</b><small>'+chapter.country+'</small>';
+  node.setAttribute('aria-label','Open '+chapter.city+' chapter');
+  node.addEventListener('click',()=>{const top=expedition.getBoundingClientRect().top+scrollY;const span=expedition.offsetHeight-innerHeight;scrollTo({top:top+span*(index+.55)/chapters.length,behavior:paused?'auto':'smooth'});});
+  orbit.append(node);orbitLabels.push(node);
+});
+
 let currentChapter=-1,expeditionProgress=0;
 chapters.forEach((chapter,index)=>{
   const button=document.createElement('button');button.type='button';button.textContent=String(index+1).padStart(2,'0');button.setAttribute('aria-label','Travel to '+chapter.city);
@@ -224,6 +234,7 @@ function readExpedition(){
     $('#expeditionCoordinates').textContent=`${Math.abs(chapter.lat).toFixed(4)}° ${chapter.lat<0?'S':'N'} / ${Math.abs(chapter.lon).toFixed(4)}° ${chapter.lon<0?'W':'E'}`;
     expeditionImage.src='./assets/photos/'+chapter.photo;expeditionImage.alt=chapter.alt;expeditionImage.style.objectPosition=chapter.position;
     [...chapterNav.children].forEach((button,i)=>button.setAttribute('aria-current',String(i===index)));
+    orbitLabels.forEach((node,i)=>node.classList.toggle('is-active',i===index));
   }
   const reveal=paused?1:THREE.MathUtils.smoothstep(local,.16,.55);
   const exit=index===chapters.length-1?1:1-THREE.MathUtils.smoothstep(local,.86,1);
