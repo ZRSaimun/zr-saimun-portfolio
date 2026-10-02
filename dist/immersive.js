@@ -290,7 +290,7 @@ function startExpedition(){
     const liveIndex=paused?index:autoIndex;
     const liveChapter=chapters[liveIndex];
     if(liveIndex!==projectedIndex){projectedIndex=liveIndex;projectedTexture=textureLoader.load('./assets/photos/'+liveChapter.photo);projectedTexture.colorSpace=THREE.SRGBColorSpace;projectorCard.material.map=projectedTexture;projectorCard.material.needsUpdate=true;projectorLabel.material.map=label(liveChapter.city,liveChapter.country.toUpperCase(),5.2).material.map;projectorLabel.material.needsUpdate=true;projectorCard.material.opacity=0;projectorCard.scale.setScalar(.72);}
-    if(!paused){projector.rotation.y+=dt*(reduced?.06:.18);projectorRing.rotation.z+=dt*(reduced?.25:.7);projectorCard.material.opacity=THREE.MathUtils.damp(projectorCard.material.opacity,.82,4,dt);projectorCard.scale.setScalar(.96+Math.sin(elapsed*2.4)*.025);projectorBeam.material.opacity=.11+Math.sin(elapsed*2.2)*.025;}
+    if(!paused){projector.rotation.y+=dt*(reduced?.06:.18);projectorRing.rotation.z+=dt*(reduced?.25:.7);projectorCard.material.opacity=THREE.MathUtils.damp(projectorCard.material.opacity,.82,4,dt);projectorCard.scale.setScalar(.68+Math.sin(elapsed*2.4)*.035);projectorBeam.material.opacity=.11+Math.sin(elapsed*2.2)*.025;}
     targetQuaternion.setFromUnitVectors(geoPoints[liveIndex].clone().normalize(),zAxis);
     globe.quaternion.slerp(targetQuaternion,paused?1:1-Math.exp(-dt*4));
     // Keep the Earth alive between chapter changes: a slow axial rotation makes
